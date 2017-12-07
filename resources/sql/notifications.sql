@@ -5,6 +5,11 @@ INSERT INTO notifications
 VALUES (:owner, :title, :content, :sendtime)
 RETURNING *;
 
+-- :name get-notifications-after-id :? :*
+-- :doc retrieve all notifications where id > provided id
+SELECT * FROM notifications
+WHERE id > :id;
+
 -- :name get-notification-by-id :? :1
 -- :doc retrieve a notification given its unique id
 SELECT * FROM notifications

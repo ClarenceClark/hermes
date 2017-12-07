@@ -71,7 +71,7 @@
                               [powerlaces/boot-figreload "0.1.1-SNAPSHOT" :scope "test"]
                               [weasel "0.7.0" :scope "test"]]))
   (System/setProperty "database-url"
-                      "postgres://hermes@localhost:3306/hermes_dev")
+                      "postgres://hermes@localhost:5432/hermes_dev")
   (task-options! repl {:init-ns 'user})
   (require 'pjstadig.humane-test-output)
   (let [pja (resolve 'pjstadig.humane-test-output/activate!)]

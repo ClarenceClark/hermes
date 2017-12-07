@@ -2,7 +2,7 @@
   (:require [compojure.core :refer [routes wrap-routes]]
             [hermes.layout :refer [error-page]]
             [hermes.routes.home :refer [home-routes]]
-            [hermes.routes.services :refer [service-routes]]
+            [hermes.routes.api :refer [service-routes]]
             [compojure.route :as route]
             [hermes.env :refer [defaults]]
             [mount.core :as mount]

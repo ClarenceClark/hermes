@@ -1,9 +1,11 @@
-(ns hermes.routes.services
+(ns hermes.routes.api
   (:require [ring.util.http-response :refer :all]
             [compojure.api.sweet :refer :all]
             [schema.core :as s]
             [compojure.api.meta :refer [restructure-param]]
             [buddy.auth.accessrules :refer [restrict]]
+            [hermes.routes.notifs-routes :as notifs-routes]
+            [hermes.routes.tags-routes :as tags-routes]
             [buddy.auth :as auth]))
 
 (defn access-error [_ _]
@@ -51,49 +53,5 @@
 
   (context "/v1" []
     :tags ["hermes"]
-
-    (context "/notifications" []
-      (GET "/" []
-        :query-params [after :- s/Int]
-        :return [Notif]
-        :summary "Get all notifications with `id > from`"
-        (ok "hello"))
-      (GET "/:id" []
-        :path-params [id :- s/Int]
-        :return Notif
-        :summary "Get the notif with the provided id"
-        (ok {}))
-      (POST "/" []
-        :body-params [title :- s/Str,
-                      content :- s/Str,
-                      tags :- [s/Int]]
-        :return Notif
-        :summary "Create new notification"
-        (do (ok {}))))
-
-    (context "/tags" []
-      (GET "/" []
-        :query-params []
-        :return [Tag]
-        :summary "Get all tags"
-        (ok "tags"))
-      (POST "/" []
-        :body-params [name :- s/Str]
-        :return Tag
-        :summary "Create new tag"
-        (ok ""))
-      (context "/:id" []
-        :path-params [id :- s/Int]
-        (GET "/" []
-          :return Tag
-          :summary "Get the tag with the provided id"
-          (ok "tags"))
-        (PUT "/" []
-          :body-params [name :- s/Str]
-          :return Tag
-          :summary "Update tag of the provided id"
-          (ok ""))
-        (DELETE "/" []
-          :return Tag
-          :summary "Delete tag with the provided id"
-          (ok ""))))))
+    notifs-routes/notifs-routes
+    tags-routes/tags-routes))

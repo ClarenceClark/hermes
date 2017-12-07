@@ -20,12 +20,12 @@
                  [metosin/muuntaja "0.4.1"]
                  [metosin/ring-http-response "0.9.0"]
                  [mount "0.1.11"]
-                 [mysql/mysql-connector-java "6.0.5"]
                  [org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.9.946" :scope "provided"]
                  [org.clojure/tools.cli "0.3.5"]
                  [org.clojure/tools.logging "0.4.0"]
                  [org.clojure/tools.reader "1.1.1"]
+                 [org.postgresql/postgresql "42.1.4"]
                  [org.webjars.bower/tether "1.4.0"]
                  [org.webjars/bootstrap "4.0.0-beta.2"]
                  [org.webjars/font-awesome "4.7.0"]
@@ -71,7 +71,7 @@
                               [powerlaces/boot-figreload "0.1.1-SNAPSHOT" :scope "test"]
                               [weasel "0.7.0" :scope "test"]]))
   (System/setProperty "database-url"
-                      "mysql://localhost:3306/hermes_dev?user=hermes")
+                      "postgres://hermes@localhost:3306/hermes_dev")
   (task-options! repl {:init-ns 'user})
   (require 'pjstadig.humane-test-output)
   (let [pja (resolve 'pjstadig.humane-test-output/activate!)]

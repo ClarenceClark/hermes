@@ -1,6 +1,6 @@
 CREATE TABLE users (
-  id INTEGER PRIMARY KEY AUTO_INCREMENT,
-  email TEXT NOT NULL,
+  id SERIAL PRIMARY KEY,
+  email TEXT NOT NULL UNIQUE,
   passhash VARCHAR(80) NOT NULL,
   apikey VARCHAR(64) NOT NULL
 );
@@ -8,14 +8,12 @@ CREATE TABLE users (
 --;;
 
 CREATE TABLE notifications (
-  id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  id SERIAL PRIMARY KEY,
   owner INTEGER NOT NULL,
   userid INTEGER NOT NULL,
   title TEXT NOT NULL,
   content TEXT NOT NULL,
   sendtime TIMESTAMP NOT NULL,
-
-  INDEX owner_idx (owner),
 
   FOREIGN KEY (owner)
   REFERENCES users(id)
@@ -26,12 +24,10 @@ CREATE TABLE notifications (
 --;;
 
 CREATE TABLE tags (
-  id INT PRIMARY KEY AUTO_INCREMENT,
+  id SERIAL PRIMARY KEY,
   owner INTEGER NOT NULL,
   userid INTEGER NOT NULL,
   name TEXT NOT NULL,
-
-  INDEX owner_idx (owner),
 
   FOREIGN KEY (owner)
   REFERENCES users(id)
@@ -42,21 +38,17 @@ CREATE TABLE tags (
 --;;
 
 CREATE TABLE notif_tag_join (
-  id INTEGER PRIMARY KEY AUTO_INCREMENT,
-  notifid INTEGER NOT NULL,
-  tagid INTEGER NOT NULL,
+  id SERIAL PRIMARY KEY,
 
-  UNIQUE (notifid, tagid),
-  INDEX notifid_idx (notifid),
-  INDEX tagid_idx (tagid),
-
-  FOREIGN KEY (notifid)
+  notifid INTEGER NOT NULL
   REFERENCES notifications(id)
-    ON UPDATE CASCADE
-    ON DELETE RESTRICT,
+  ON UPDATE CASCADE
+  ON DELETE RESTRICT,
 
-  FOREIGN KEY (tagid)
+  tagid INTEGER NOT NULL
   REFERENCES tags(id)
-    ON UPDATE CASCADE
-    ON DELETE RESTRICT
+  ON UPDATE CASCADE
+  ON DELETE RESTRICT,
+
+  UNIQUE (notifid, tagid)
 );

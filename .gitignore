@@ -85,3 +85,4 @@ fabric.properties
 
 ### Custom ###
 log/
+projectmig.clj

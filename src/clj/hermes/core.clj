@@ -2,11 +2,12 @@
   (:require [hermes.handler :as handler]
             [luminus.repl-server :as repl]
             [luminus.http-server :as http]
-            [luminus-migrations.core :as migrations]
+            [luminus-migrations.core :as luminus-migrate]
             [hermes.config :refer [env]]
             [clojure.tools.cli :refer [parse-opts]]
             [clojure.tools.logging :as log]
-            [mount.core :as mount])
+            [mount.core :as mount]
+            [migratus.core :as migratus])
   (:gen-class))
 
 (def cli-options
@@ -40,11 +41,17 @@
   (shutdown-agents))
 
 (defn start-app [args]
+  ; Start all components
   (doseq [component (-> args
                         (parse-opts cli-options)
                         mount/start-with-args
                         :started)]
     (log/info component "started"))
+
+  ; Migrate on start
+  (luminus-migrate/migrate ["migrate"] (select-keys env [:database-url]))
+
+  ; Clean up before shutdown
   (.addShutdownHook (Runtime/getRuntime) (Thread. stop-app)))
 
 (defn -main [& args]
@@ -52,14 +59,14 @@
     (some #{"init"} args)
     (do
       (mount/start #'hermes.config/env)
-      (migrations/init (select-keys env [:database-url :init-script]))
+      (luminus-migrate/init (select-keys env [:database-url :init-script]))
       (System/exit 0))
     (some #{"migrate" "rollback"} args)
     (do
       (mount/start #'hermes.config/env)
-      (migrations/migrate args (select-keys env [:database-url]))
+      (luminus-migrate/migrate args (select-keys env [:database-url]))
       (System/exit 0))
     :else
     (start-app args))
-  
+
   @(promise))

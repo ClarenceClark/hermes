@@ -4,7 +4,7 @@
             [schema.core :as s]
             [compojure.api.meta :refer [restructure-param]]
             [buddy.auth.accessrules :refer [restrict]]
-            [buddy.auth :refer [authenticated?]]))
+            [buddy.auth :as auth]))
 
 (defn access-error [_ _]
   (unauthorized {:error "unauthorized"}))
@@ -21,46 +21,79 @@
   [_ binding acc]
   (update-in acc [:letks] into [binding `(:identity ~'+compojure-api-request+)]))
 
+(s/defschema Notif
+  {:id s/Int
+   :title s/Str
+   :content s/Str
+   :tags [s/Int]
+   :time s/Int})
+
+(s/defschema Tag
+  {:id s/Int
+   :name s/Str})
+
+(s/defschema NotifIn
+  {:title s/Str
+   :content s/Str
+   :tags [s/Int]})
+
 (defapi service-routes
-  {:swagger {:ui "/swagger-ui"
+  {:swagger {:ui "/api-docs"
              :spec "/swagger.json"
              :data {:info {:version "1.0.0"
-                           :title "Sample API"
-                           :description "Sample Services"}}}}
-  
+                           :title "Hermes REST Api"
+                           :description ""}}}}
+
   (GET "/authenticated" []
-       :auth-rules authenticated?
-       :current-user user
-       (ok {:user user}))
-  (context "/api" []
-    :tags ["thingie"]
+    :auth-rules auth/authenticated?
+    :current-user user
+    (ok (:user user)))
 
-    (GET "/plus" []
-      :return       Long
-      :query-params [x :- Long, {y :- Long 1}]
-      :summary      "x+y with query-parameters. y defaults to 1."
-      (ok (+ x y)))
+  (context "/v1" []
+    :tags ["hermes"]
 
-    (POST "/minus" []
-      :return      Long
-      :body-params [x :- Long, y :- Long]
-      :summary     "x-y with body-parameters."
-      (ok (- x y)))
+    (context "/notifications" []
+      (GET "/" []
+        :query-params [after :- s/Int]
+        :return [Notif]
+        :summary "Get all notifications with `id > from`"
+        (ok "hello"))
+      (GET "/:id" []
+        :path-params [id :- s/Int]
+        :return Notif
+        :summary "Get the notif with the provided id"
+        (ok {}))
+      (POST "/" []
+        :body-params [title :- s/Str,
+                      content :- s/Str,
+                      tags :- [s/Int]]
+        :return Notif
+        :summary "Create new notification"
+        (do (ok {}))))
 
-    (GET "/times/:x/:y" []
-      :return      Long
-      :path-params [x :- Long, y :- Long]
-      :summary     "x*y with path-parameters"
-      (ok (* x y)))
-
-    (POST "/divide" []
-      :return      Double
-      :form-params [x :- Long, y :- Long]
-      :summary     "x/y with form-parameters"
-      (ok (/ x y)))
-
-    (GET "/power" []
-      :return      Long
-      :header-params [x :- Long, y :- Long]
-      :summary     "x^y with header-parameters"
-      (ok (long (Math/pow x y))))))
+    (context "/tags" []
+      (GET "/" []
+        :query-params []
+        :return [Tag]
+        :summary "Get all tags"
+        (ok "tags"))
+      (POST "/" []
+        :body-params [name :- s/Str]
+        :return Tag
+        :summary "Create new tag"
+        (ok ""))
+      (context "/:id" []
+        :path-params [id :- s/Int]
+        (GET "/" []
+          :return Tag
+          :summary "Get the tag with the provided id"
+          (ok "tags"))
+        (PUT "/" []
+          :body-params [name :- s/Str]
+          :return Tag
+          :summary "Update tag of the provided id"
+          (ok ""))
+        (DELETE "/" []
+          :return Tag
+          :summary "Delete tag with the provided id"
+          (ok ""))))))

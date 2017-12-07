@@ -1,14 +1,14 @@
 (set-env!
- :dependencies '[[adzerk/boot-cljs "2.1.0-SNAPSHOT" :scope "test"]
+ :dependencies '[[adzerk/boot-cljs "2.1.4" :scope "test"]
                  [adzerk/boot-cljs-repl "0.3.3" :scope "test"]
                  [buddy "2.0.0"]
                  [ch.qos.logback/logback-classic "1.2.3"]
-                 [clj-time "0.14.0"]
+                 [clj-time "0.14.2"]
                  [cljs-ajax "0.7.3"]
                  [compojure "1.6.0"]
                  [conman "0.7.4"]
                  [cprop "0.1.11"]
-                 [crisptrutski/boot-cljs-test "0.3.2-SNAPSHOT" :scope "test"]
+                 [crisptrutski/boot-cljs-test "0.3.4" :scope "test"]
                  [deraen/boot-sass "0.3.1" :scope "test"]
                  [funcool/struct "1.1.0"]
                  [luminus-http-kit "0.1.5"]
@@ -25,10 +25,11 @@
                  [org.clojure/clojurescript "1.9.946" :scope "provided"]
                  [org.clojure/tools.cli "0.3.5"]
                  [org.clojure/tools.logging "0.4.0"]
-                 [org.clojure/tools.reader "1.1.0"]
+                 [org.clojure/tools.reader "1.1.1"]
                  [org.webjars.bower/tether "1.4.0"]
-                 [org.webjars/bootstrap "4.0.0-alpha.5"]
+                 [org.webjars/bootstrap "4.0.0-beta.2"]
                  [org.webjars/font-awesome "4.7.0"]
+                 [ragtime "0.7.2"]
                  [re-frame "0.10.2"]
                  [reagent "0.7.0"]
                  [reagent-utils "0.2.1"]
@@ -69,6 +70,8 @@
                               [pandeiro/boot-http "0.7.6" :scope "test"]
                               [powerlaces/boot-figreload "0.1.1-SNAPSHOT" :scope "test"]
                               [weasel "0.7.0" :scope "test"]]))
+  (System/setProperty "database-url"
+                      "mysql://localhost:3306/hermes_dev?user=hermes")
   (task-options! repl {:init-ns 'user})
   (require 'pjstadig.humane-test-output)
   (let [pja (resolve 'pjstadig.humane-test-output/activate!)]

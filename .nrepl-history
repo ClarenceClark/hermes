@@ -1,0 +1,157 @@
+(require '[migratus.core :as migratus])
+(def config
+  {:store :database
+   :migration-dir "resources/migrations"
+   :init-script "resources/sql/init.sql"
+   :db {:classname "com.mysql.jdbc.Driver"
+        :subprotocol "mysql"
+        :subname "//localhost:3306/hermes_dev"
+        :user "hermes"
+        :password ""}})
+(migratus/init config)
+(read-file "resources/sql/init.sql")
+(slurp "resources/sql/init.sql")
+(migratus/find-init-script "resources/sql/" "init.sql")
+exit
+(require '[migratus.core :as m])
+(def config
+  {:store :database
+   :migration-dir "resources/migrations"
+   :init-script "resources/sql/init.sql"
+   :db {:classname "com.mysql.jc.jdbc.Driver"
+        :subprotocol "mysql"
+        :subname "//localhost:3306/hermes_dev"
+        :user "hermes"
+        :password ""}})
+(m/migrate config)
+(def config
+  {:store :database
+   :migration-dir "resources/migrations"
+   :init-script "resources/sql/init.sql"
+   :db {:classname "com.mysql.jc.jdbc.Driver"
+        :subprotocol "mysql"
+        :subname "//localhost:3306/hermes_dev"
+        :user "hermes"
+(def config
+  {:store :database
+   :migration-dir "resources/migrations/"
+   :init-script "resources/sql/init.sql"
+   :db {:classname "com.mysql.jc.jdbc.Driver"
+        :subprotocol "mysql"
+        :subname "//localhost:3306/hermes_dev"
+        :user "hermes"
+        :password ""}})
+(m/migrate config)
+(m/migrate config "201712071300")
+(m/migrate config)
+(m/init config)
+(def config
+  {:store :database
+   :migration-dir "resources/migrations/"
+   :init-script "init.sql"
+   :db {:classname "com.mysql.jc.jdbc.Driver"
+        :subprotocol "mysql"
+        :subname "//localhost:3306/hermes_dev"
+        :user "hermes"
+        :password ""}})
+(m/init config)
+(def config
+  {:store :database
+   :migration-dir "resources/migrations/"
+   :init-script "~/Documents/code/hermes4/resources/migrations/init.sql"
+   :db {:classname "com.mysql.jc.jdbc.Driver"
+        :subprotocol "mysql"
+        :subname "//localhost:3306/hermes_dev"
+        :user "hermes"
+        :password ""}})
+(m/init config)
+(require '[migratus.dabatase :as d])
+(clojure.java.classpath/classpath-directories)
+exit
+(require '[ragtime.repl :as r])
+(require '[ragtime.jdbc :as jdbc])
+(def ragtime-config
+  {:datastore
+   (jdbc/sql-database
+     {:connection-uri (env :database-url)})
+   :migrations
+   (jdbc/load-directory "resources/migrations/")})
+(def ragtime-config
+  {:datastore
+   (jdbc/sql-database
+     {:connection-uri (env :database-url)})
+   :migrations
+(require '[hermes.config :refer [env]])
+(def ragtime-config
+  {:datastore
+   (jdbc/sql-database
+     {:connection-uri (env :database-url)})
+   :migrations
+   (jdbc/load-directory "resources/migrations/")})
+(def ragtime-config
+  {:datastore
+   (jdbc/sql-database
+     {:connection-uri "mysql://localhost:3306/hermes_dev?user=hermes"})
+   :migrations
+   (jdbc/load-directory "resources/migrations/")})
+(r/migrate ragtime-config)
+(def dbspec {:classname "com.mysql.jc.jdbc.Driver"
+        :subprotocol "mysql"
+        :subname "//localhost:3306/hermes_dev"
+        :user "hermes"})
+(def ragtime-config
+  {:datastore
+   (jdbc/sql-database
+     {:connection-uri dbspec})
+   :migrations
+   (jdbc/load-directory "resources/migrations/")})
+(r/migrate ragtime-config)
+(def ragtime-config
+  {:datastore
+   (jdbc/sql-database dbspec)
+   :migrations
+   (jdbc/load-directory "resources/migrations/")})
+(r/migrate ragtime-config)
+exit
+(ns hermes.db.migrations)
+(require '[ragtime.repl :as r])
+(r/migrate ragtime-config)
+(def dbspec
+  {:classname "com.mysql.jc.jdbc.Driver"
+   :subprotocol "mysql"
+   :subname "//localhost:3306/hermes_dev"
+   :user "hermes"})
+(def ragtime-config
+  {:datastore
+   (jdbc/sql-database dbspec)
+   :migrations
+   (jdbc/load-directory "resources/migrations/")})
+(ns hermes.db.migrations
+  (:require [ragtime.jdbc :as jdbc]))
+(def config
+  {:store :database
+   :migration-dir "resources/migrations/"
+   ;:init-script "init.sql"
+   :db {:classname "com.mysql.jc.jdbc.Driver"
+        :subprotocol "mysql"
+        :subname "//localhost:3306/hermes_dev"
+        :user "hermes"}})
+(def dbspec
+  {:classname "com.mysql.jc.jdbc.Driver"
+   :subprotocol "mysql"
+   :subname "//localhost:3306/hermes_dev"
+   :user "hermes"})
+(def ragtime-config
+  {:datastore
+   (jdbc/sql-database dbspec)
+   :migrations
+   (jdbc/load-directory "resources/migrations/")})
+(r/migrate ragtime-config)
+grant all on hermes_dev.* to hermes@localhost;
+(r/migrate ragtime-config)
+(r/rollback ragtime-config)
+(r/migrate ragtime-config)
+(r/rollback ragtime-config)
+(r/migrate ragtime-config)
+(r/rollback ragtime-config)
+exit

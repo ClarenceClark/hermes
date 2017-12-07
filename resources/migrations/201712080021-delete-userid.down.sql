@@ -1,2 +1,3 @@
 ALTER TABLE notifications
-ADD COLUMN userid INTEGER;
+ADD COLUMN userid INTEGER
+DEFAULT -1;

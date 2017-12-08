@@ -47,7 +47,7 @@
                         mount/start-with-args
                         :started)]
     (log/info component "started"))
-  
+
   ; Clean up before shutdown
   (.addShutdownHook (Runtime/getRuntime) (Thread. stop-app)))
 

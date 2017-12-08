@@ -1,8 +1,8 @@
 -- :name create-user! :<! :1
 -- :doc creates a new user record
 INSERT INTO users
-(id, email, passhash, apikey)
-VALUES (:id, :email, :passhash, :apikey)
+(email, passhash, apikey)
+VALUES (:email, :passhash, :apikey)
 RETURNING *;
 
 -- :name update-user! :<! :1

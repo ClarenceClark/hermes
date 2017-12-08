@@ -21,3 +21,10 @@ SELECT * FROM notifications
 INNER JOIN notif_tag_join
 ON notifications.id = notif_tag_join.notifid
 WHERE tagid = :tagid;
+
+-- :name get-notifications-for-tags-after-id :? :*
+-- :doc retrieve all notifications tagged with tagid
+SELECT * FROM notifications
+INNER JOIN notif_tag_join ON notifications.id = notif_tag_join.notifid
+WHERE tagid IN (:v*:tagids)
+AND notifications.id > :afterid;

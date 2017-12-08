@@ -85,3 +85,5 @@ fabric.properties
 
 ### Custom ###
 log/
+.lein-env
+.nrepl-history

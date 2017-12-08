@@ -4,7 +4,7 @@
 
 {:profiles/dev
  {:env {:database-url
-        "mysql://localhost:3306/hermes_dev?user=hermes"}}
+        "mysql://localhost:5432/hermes_dev?user=hermes"}}
  :profiles/test
  {:env {:database-url
-        "mysql://localhost:3306/hermes_test?user=hermes"}}}
+        "mysql://localhost:5432/hermes_test?user=hermes"}}}

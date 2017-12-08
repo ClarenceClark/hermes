@@ -47,10 +47,7 @@
                         mount/start-with-args
                         :started)]
     (log/info component "started"))
-
-  ; Migrate on start
-  (luminus-migrate/migrate ["migrate"] (select-keys env [:database-url]))
-
+  
   ; Clean up before shutdown
   (.addShutdownHook (Runtime/getRuntime) (Thread. stop-app)))
 

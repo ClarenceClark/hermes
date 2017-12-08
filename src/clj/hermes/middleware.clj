@@ -1,5 +1,6 @@
 (ns hermes.middleware
   (:require [hermes.env :refer [defaults]]
+            [hermes.auth :as auth]
             [cheshire.generate :as cheshire]
             [cognitect.transit :as transit]
             [clojure.tools.logging :as log]
@@ -102,9 +103,13 @@
         (wrap-authentication backend)
         (wrap-authorization backend))))
 
+(defn wrap-http-basic
+  "Middleware used on routes with HTTP basic authentication"
+  [handler]
+  (wrap-authentication handler auth/httpbasic-backend))
+
 (defn wrap-base [handler]
   (-> ((:middleware defaults) handler)
-      wrap-auth
       wrap-webjars
       (wrap-defaults
         (-> site-defaults

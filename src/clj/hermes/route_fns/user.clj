@@ -21,7 +21,7 @@
                                     :passhash passhash
                                     :apikey apikey})
                   (catch PSQLException e e))]
-    (if (map? user) ; Insert success
+    (if (not-empty user) ; Insert success
       (respond/created (str "/notifications/" {:id user})
                        user)
       (respond/internal-server-error {:error (str user)}))))
@@ -29,7 +29,7 @@
 (defn create-user-resp
   "Get the response to a user create request."
   [email password]
-  (let [user (qu/get-user-by-email {:email "none"})]
+  (let [user (qu/get-user-by-email {:email email})]
     (if (not-empty user)
       (respond/conflict {:error "Email already registered"})
       (create-new-user email password))))

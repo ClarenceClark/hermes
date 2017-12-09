@@ -5,7 +5,8 @@
     [clojure.java.jdbc :as jdbc]
     [conman.core :as conman]
     [hermes.config :refer [env]]
-    [mount.core :refer [defstate]])
+    [mount.core :refer [defstate]]
+    [clj-time.jdbc])
   (:import org.postgresql.util.PGobject
            java.sql.Array
            clojure.lang.IPersistentMap

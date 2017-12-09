@@ -30,7 +30,9 @@
         notif (qu/create-notification! notif-data)
         notifid (:id notif)
         easyids (map :easyid tags)
-        ntjoin (map #(get-tag-join-map userid notifid %) easyids)
+        ntjoin (->> easyids
+                    (map #(vector userid notifid %))
+                    (vec))
         created-path (str "/notifications/" (:id notif))
         ret-notif (assoc notif :tags easyids)]
     ; Associate notifs to tags

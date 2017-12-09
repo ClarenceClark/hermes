@@ -17,14 +17,11 @@
         apikey (-> (nonce/random-bytes 12)
                    (hash/sha512)
                    (codecs/bytes->hex))
-        user (try (qu/create-user! {:email email
-                                    :passhash passhash
-                                    :apikey apikey})
-                  (catch PSQLException e e))]
-    (if (not-empty user) ; Insert success
-      (respond/created (str "/notifications/" {:id user})
-                       user)
-      (respond/internal-server-error {:error (str user)}))))
+        user (qu/create-user! {:email email
+                               :passhash passhash
+                               :apikey apikey})]
+    (respond/created (str "/notifications/" (:id user))
+                     user)))
 
 (defn create-user-resp
   "Get the response to a user create request."

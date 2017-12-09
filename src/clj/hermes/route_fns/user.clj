@@ -10,7 +10,7 @@
   {:alg :bcrypt+sha512
    :iterations 12})
 
-(defn create-new-user
+(defn- create-new-user
   "Creates a new user record given an email and plaintext password."
   [email password]
   (let [passhash (pass/derive password passhash-options)

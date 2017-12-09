@@ -4,7 +4,10 @@
             [schema.core :as s]
             [compojure.api.meta :refer [restructure-param]]
             [buddy.auth.accessrules :refer [restrict]]
-            [buddy.auth :as auth]))
+            [buddy.auth :as auth]
+            [hermes.route-fns.user :as userfns]
+            [hermes.route-fns.get-notifs :as get-notif-fns]
+            [hermes.route-fns.create-notif :as create-notif-fns]))
 
 (defn access-error [_ _]
   (unauthorized {:error "unauthorized"}))
@@ -21,22 +24,6 @@
   [_ binding acc]
   (update-in acc [:letks] into [binding `(:identity ~'+compojure-api-request+)]))
 
-(s/defschema Notif
-  {:id s/Int
-   :title s/Str
-   :content s/Str
-   :tags [s/Int]
-   :time s/Str})
-
-(s/defschema Tag
-  {:id s/Int
-   :name s/Str})
-
-(s/defschema NotifIn
-  {:title s/Str
-   :content s/Str
-   :tags [s/Int]})
-
 (defapi service-routes
   {:swagger {:ui "/api-docs"
              :spec "/swagger.json"
@@ -47,31 +34,12 @@
   (GET "/authenticated" []
     :auth-rules auth/authenticated?
     :current-user user
-    (ok (:user user)))
+    (ok (:email user)))
 
   (context "/v1" []
     :tags ["hermes"]
     :auth-rules auth/authenticated?
     :current-user user
-
-    (context "/notifications" []
-      (GET "/" []
-        :query-params [after :- s/Int]
-        :return [Notif]
-        :summary "Get all notifications with `id > from`"
-        (ok "hello"))
-      (GET "/:id" []
-        :path-params [id :- s/Int]
-        :return Notif
-        :summary "Get the notif with the provided id"
-        (ok {}))
-      (POST "/" []
-        :body-params [title :- s/Str,
-                      content :- s/Str,
-                      tags :- [s/Int]]
-        :return Notif
-        :summary "Create new notification"
-        (do (ok {}))))
 
     (context "/tags" []
       (GET "/" []

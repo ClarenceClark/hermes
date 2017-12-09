@@ -26,6 +26,7 @@ AND userid = :userid;
 SELECT * FROM notifications
 INNER JOIN notif_tags ON notifications.id = notif_tags.notifid
 WHERE tagid IN (:v*:tagids)
+AND notifications.userid = :userid
 AND notifications.id > :afterid;
 
 -- :name link-tag-and-notif :? :n

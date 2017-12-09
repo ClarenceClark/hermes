@@ -10,7 +10,7 @@
   (unauthorized {:error "unauthorized"}))
 
 (defn wrap-restricted [handler rule]
-  (restrict handler {:handler  rule
+  (restrict handler {:handler rule
                      :on-error access-error}))
 
 (defmethod restructure-param :auth-rules

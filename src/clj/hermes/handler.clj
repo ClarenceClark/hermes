@@ -9,8 +9,8 @@
             [hermes.middleware :as middleware]))
 
 (mount/defstate init-app
-                :start ((or (:init defaults) identity))
-                :stop  ((or (:stop defaults) identity)))
+  :start ((or (:init defaults) identity))
+  :stop ((or (:stop defaults) identity)))
 
 (def app-routes
   (routes

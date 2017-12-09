@@ -1,8 +1,8 @@
 (ns hermes.routes.tags
   (:require [schema.core :as s]
-    [hermes.schemas :as model]
-    [compojure.api.sweet :refer :all]
-    [buddy.auth :as auth]))
+            [hermes.schemas :as model]
+            [compojure.api.sweet :refer :all]
+            [buddy.auth :as auth]))
 
 (def tag-routes
   (context "/tags" []
@@ -24,15 +24,15 @@
       :path-params [id :- s/Int]
 
       (GET "/" []
-           :return model/Tag
-           :summary "Get the tag with the provided id"
-           (ok "tags"))
+        :return model/Tag
+        :summary "Get the tag with the provided id"
+        (ok "tags"))
       (PUT "/" []
-           :body-params [name :- s/Str]
-           :return model/Tag
-           :summary "Update tag of the provided id"
-           (ok ""))
+        :body-params [name :- s/Str]
+        :return model/Tag
+        :summary "Update tag of the provided id"
+        (ok ""))
       (DELETE "/" []
-              :return model/Tag
-              :summary "Delete tag with the provided id"
-              (ok "")))))
+        :return model/Tag
+        :summary "Delete tag with the provided id"
+        (ok "")))))

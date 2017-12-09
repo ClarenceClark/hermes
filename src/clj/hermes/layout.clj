@@ -7,7 +7,7 @@
             [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]))
 
 (declare ^:dynamic *app-context*)
-(parser/set-resource-path!  (clojure.java.io/resource "templates"))
+(parser/set-resource-path! (clojure.java.io/resource "templates"))
 (parser/add-tag! :csrf-field (fn [_ _] (anti-forgery-field)))
 (filters/add-filter! :markdown (fn [content] [:safe (md-to-html-string content)]))
 
@@ -33,6 +33,6 @@
    returns a response map with the error page as the body
    and the status specified by the status key"
   [error-details]
-  {:status  (:status error-details)
+  {:status (:status error-details)
    :headers {"Content-Type" "text/html; charset=utf-8"}
-   :body    (parser/render-file "error.html" error-details)})
+   :body (parser/render-file "error.html" error-details)})

@@ -18,7 +18,7 @@
   (let [email (:email auth-data)
         secret (:password auth-data)
         user-info (get-user-info email)]
-    (if (and user-info ; user-info not nil
+    (if (and user-info                                      ; user-info not nil
              ; Check both apikey and password
              (or (= secret (:apikey user-info))
                  (hash/check secret (:password user-info))))

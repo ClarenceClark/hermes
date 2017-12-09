@@ -10,7 +10,7 @@
         notif-user (:userid notif)
         user-owns-notif (= (:id userinfo) notif-user)]
     (if user-owns-notif
-      (resp/ok notif)
+      (resp/ok (dbutil/dbnotif->user notif))
       (resp/forbidden {:error "User doesn't own this notification."}))))
 
 (defn get-all-notifs-resp

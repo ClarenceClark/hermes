@@ -1,8 +1,8 @@
 (ns hermes.route-fns.create-notif
   (:require [hermes.db.core :as qu]
             [ring.util.http-response :as resp]
-            [clj-time.core :as t])
-  (:import [org.postgresql.util PSQLException]))
+            [clj-time.core :as t]
+            [hermes.db.utils :as dbutils]))
 
 (defn- get-tag
   "Gets the userid for each tag if given a name. Returns the the required
@@ -27,11 +27,12 @@
         easyids (map :easyid tags)
         ntjoin (map #(vector userid notifid %) easyids)
         created-path (str "/notifications/" (:id notif))
-        ret-notif (assoc notif :tags easyids)]
+        ret-notif (assoc notif :tags easyids)
+        user-notif (dbutils/dbnotif->user ret-notif)]
     ; Associate notifs to tags
     (qu/link-tag-and-notif {:notif-tags ntjoin})
     (resp/created created-path
-                  ret-notif)))
+                  user-notif)))
 
 (defn create-notif-resp
   "Checks if the insert request is valid (ie all tags exist) and

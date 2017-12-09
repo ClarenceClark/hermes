@@ -12,11 +12,18 @@
 
 (defn dbnotif->user
   "Transform an internal notif, as returned by the db, to a user-facing one."
-  [{:keys [id userid title content sendtime]}]
-  {:id id
-   :title title
-   :content content
-   :time (fmt/unparse iso8601 sendtime)})
+  [{:keys [id userid title content sendtime] :as dbnotif}]
+  (let [base {:id id
+              :title title
+              :content content
+              :time (fmt/unparse iso8601 sendtime)}]
+    (if (contains? dbnotif :tags)
+      (-> base
+          (assoc :tags (:tags dbnotif)))
+      (let [tags (qu/get-tags-for-notif {:notifid id})
+            easyids (map :easyid tags)]
+        (-> base
+            (assoc :tags easyids))))))
 
 (defn dbtaglist->user
   "Transforms a list of internal tags to user-facing versions"

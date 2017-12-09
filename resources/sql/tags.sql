@@ -12,10 +12,15 @@ UPDATE tags SET
 WHERE userid = :userid AND easyid = :easyid
 RETURNING *;
 
--- :name get-tag :? :1
+-- :name get-tag-by-id :? :1
 -- :doc retrieve a tag given a userid and an ownerid
 SELECT * FROM tags
 WHERE userid = :userid AND easyid = :easyid;
+
+-- :name get-tag-by-name :? :1
+-- :doc retrieve a tag given a userid and a name
+SELECT * FROM tags
+WHERE userid = :userid AND name = :name;
 
 -- :name get-all-tags-for-user :? :*
 -- :doc get all tags owned by owner

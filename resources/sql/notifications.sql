@@ -29,5 +29,6 @@ WHERE tagid IN (:v*:tagids)
 AND notifications.id > :afterid;
 
 -- :name link-tag-and-notif :? :n
+-- :doc insert a new record in the many-to-many notif-to-tag join table
 INSERT INTO notif_tags (userid, notifid, tagid)
 VALUES :tuples*:notif_tags;

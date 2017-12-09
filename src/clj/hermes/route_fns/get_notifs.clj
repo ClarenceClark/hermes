@@ -24,7 +24,8 @@
 (defn get-notifs-for-tag
   [userinfo tag-easyid]
   (let [userid (:id userinfo)
-        tag (dbutil/get-db-tag userid tag-easyid nil)]
+        distinct-easyids (distinct tag-easyid)
+        tag (dbutil/get-db-tag userid distinct-easyids nil)]
     (if (empty? tag)
       (resp/not-found {:error "Tag with id not found"})
       (-> (qu/get-all-notifications-for-tag

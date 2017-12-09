@@ -11,18 +11,18 @@ WHERE id = :id;
 
 -- :name get-all-notifications-for-tag :? :*
 -- :doc retrieve all notifications given a tagid
-SELECT * FROM notifications
+SELECT DISTINCT * FROM notifications
 INNER JOIN notif_tags ON notifications.id = notif_tags.notifid
 WHERE tagid = :easyid AND notifications.userid = :userid;
 
 -- :name get-all-notifications-after-id :? :*
 -- :doc retrieve all notifications where id > provided id
-SELECT * FROM notifications
+SELECT DISTINCT * FROM notifications
 WHERE id > :id AND userid = :userid;
 
 -- :name get-notifications-for-tags-after-id :? :*
 -- :doc retrieve all notifications tagged with tagid
-SELECT * FROM notifications
+SELECT DISTINCT * FROM notifications
 INNER JOIN notif_tags ON notifications.id = notif_tags.notifid
 WHERE tagid IN (:v*:tagids)
 AND notifications.userid = :userid

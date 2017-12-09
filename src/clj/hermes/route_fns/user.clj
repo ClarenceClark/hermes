@@ -21,7 +21,7 @@
                                :passhash passhash
                                :apikey apikey})]
     (respond/created (str "/notifications/" (:id user))
-                     user)))
+                     (select-keys user [:email :apikey]))))
 
 (defn create-user-resp
   "Get the response to a user create request."

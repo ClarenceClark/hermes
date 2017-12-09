@@ -20,7 +20,7 @@
                  [metosin/muuntaja "0.4.1"]
                  [metosin/ring-http-response "0.9.0"]
                  [mount "0.1.11"]
-                 [org.clojure/clojure "1.8.0"]
+                 [org.clojure/clojure "1.9.0"]
                  [org.clojure/clojurescript "1.9.946" :scope "provided"]
                  [org.clojure/tools.cli "0.3.5"]
                  [org.clojure/tools.logging "0.4.0"]
@@ -72,7 +72,9 @@
                               [weasel "0.7.0" :scope "test"]]))
   (System/setProperty "database-url"
                       "postgres://hermes@localhost:5432/hermes_dev")
-  (task-options! repl {:init-ns 'user})
+  (task-options!
+    repl {:init-ns 'user}
+    ())
   (require 'pjstadig.humane-test-output)
   (let [pja (resolve 'pjstadig.humane-test-output/activate!)]
     (pja))

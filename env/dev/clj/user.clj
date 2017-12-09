@@ -19,5 +19,3 @@
 
 (defn rollback []
   (migrations/migrate ["rollback"] (select-keys env [:database-url])))
-
-

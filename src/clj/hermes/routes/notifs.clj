@@ -4,7 +4,8 @@
             [hermes.route-fns.get-notifs :refer :all]
             [hermes.route-fns.create-notif :refer :all]
             [compojure.api.sweet :refer :all]
-            [buddy.auth :as auth]))
+            [buddy.auth :as auth]
+            [hermes.auth]))
 
 (def notif-routes
   (context "/notifications" []

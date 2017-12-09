@@ -14,11 +14,6 @@
     (qu/get-tag-by-name {:userid userid
                          :name tag})))
 
-(defn- get-tag-join-map [userid notifid easyid]
-  {:userid userid
-   :notifid notifid
-   :tagid easyid})
-
 (defn- create-notif
   "Create a new notification and links it with its tags. Assumes that all
   tags referenced by the notification exist."
@@ -30,9 +25,7 @@
         notif (qu/create-notification! notif-data)
         notifid (:id notif)
         easyids (map :easyid tags)
-        ntjoin (->> easyids
-                    (map #(vector userid notifid %))
-                    (vec))
+        ntjoin (map #(vector userid notifid %) easyids)
         created-path (str "/notifications/" (:id notif))
         ret-notif (assoc notif :tags easyids)]
     ; Associate notifs to tags

@@ -1,7 +1,26 @@
 (ns hermes.auth
   (:require [buddy.hashers :as hash]
             [buddy.auth.backends.httpbasic :as ht]
+            [compojure.api.sweet :refer :all]
+            [compojure.api.meta :refer [restructure-param]]
+            [buddy.auth.accessrules :refer [restrict]]
+            [ring.util.http-response :as resp]
             [hermes.db.core :as qu]))
+
+(defn access-error [_ _]
+  (resp/unauthorized {:error "unauthorized"}))
+
+(defn wrap-restricted [handler rule]
+  (restrict handler {:handler rule
+                     :on-error access-error}))
+
+(defmethod restructure-param :auth-rules
+  [_ rule acc]
+  (update-in acc [:middleware] conj [wrap-restricted rule]))
+
+(defmethod restructure-param :current-user
+  [_ binding acc]
+  (update-in acc [:letks] into [binding `(:identity ~'+compojure-api-request+)]))
 
 (defn- get-user-info
   "Get the user information in a map."

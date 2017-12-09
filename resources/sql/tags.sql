@@ -12,6 +12,11 @@ UPDATE tags SET
 WHERE userid = :userid AND easyid = :easyid
 RETURNING *;
 
+-- :name delete-tag! :! :n
+-- :doc deletes a tag
+DELETE FROM tags
+WHERE userid = :userid AND easyid = :easyid;
+
 -- :name get-tag-by-id :? :1
 -- :doc retrieve a tag given a userid and an ownerid
 SELECT * FROM tags

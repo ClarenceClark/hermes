@@ -1,6 +1,7 @@
 (ns hermes.route-fns.get-notifs
   (:require [ring.util.http-response :as resp]
-            [hermes.db.core :as qu]))
+            [hermes.db.core :as qu]
+            [hermes.db.utils :as dbutil]))
 
 (defn get-notif-resp
   "Creates the response to a GET notif for id"
@@ -18,5 +19,16 @@
                  {:tagids tagids
                   :afterid afterid
                   :userid (:id userinfo)})]
-    (resp/ok notifs)))
+    (resp/ok (dbutil/dbnotiflist->user notifs))))
 
+(defn get-notifs-for-tag
+  [userinfo tag-easyid]
+  (let [userid (:id userinfo)
+        tag (dbutil/get-db-tag userid tag-easyid nil)]
+    (if (empty? tag)
+      (resp/not-found {:error "Tag with id not found"})
+      (-> (qu/get-all-notifications-for-tag
+            {:userid userid
+             :easyid tag-easyid})
+          (dbutil/dbnotiflist->user)
+          (resp/ok)))))

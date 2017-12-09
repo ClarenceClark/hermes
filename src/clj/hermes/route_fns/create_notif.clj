@@ -39,5 +39,5 @@
   [userinfo title content usertags]
   (let [tags (map get-tag usertags)]
     (if (.contains tags nil)
-      (resp/bad-request {:error "One of the tags don't exist"})
+      (resp/bad-request {:error "One or more of the tags don't exist"})
       (create-notif (:id userinfo) title content tags))))

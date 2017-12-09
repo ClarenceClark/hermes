@@ -1,8 +1,9 @@
 (ns hermes.route-fns.create-tag
   (:require [ring.util.http-response :as resp]
+            [hermes.db.core :as qu]
             [hermes.db.utils :as dbutil]))
 
-(defn- create-tag
+(defn create-tag
   "Creates a tag. Assumes it doesn't already exist."
   [userid easyid name]
   (let [tag (qu/create-tag! {:userid (:id userid)

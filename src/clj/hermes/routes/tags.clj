@@ -36,7 +36,7 @@
       (POST "/" []
         :return model/Tag
         :summary "Create a tag with the specified id"
-        (create-tag-with-id-resp userinfo easyid name))
+        (create-tag-with-id-resp userinfo id name))
       (PUT "/" []
         :body-params [name :- s/Str]
         :return model/Tag
@@ -47,6 +47,6 @@
         (delete-tag-resp userinfo id))
 
       (GET "/notifications" []
-        :returs [model/Notif]
+        :return [model/Notif]
         :summary "Get all notifications with the specified tag"
         (get-notifs-for-tag userinfo id)))))

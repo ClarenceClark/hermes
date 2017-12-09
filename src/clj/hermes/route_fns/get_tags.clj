@@ -1,5 +1,6 @@
 (ns hermes.route-fns.get-tags
-  (:require [ring.util.http-response :as resp]))
+  (:require [ring.util.http-response :as resp]
+            [hermes.db.core :as qu]))
 
 (defn get-all-tags-resp
   "Get all tags for the user"

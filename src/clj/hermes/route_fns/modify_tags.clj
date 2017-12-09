@@ -1,6 +1,7 @@
 (ns hermes.route-fns.modify-tags
   (:require [hermes.route-fns.create-tag :refer :all]
             [hermes.db.utils :as dbutil]
+            [hermes.db.core :as qu]
             [ring.util.http-response :as resp]))
 
 (defn update-tag-resp

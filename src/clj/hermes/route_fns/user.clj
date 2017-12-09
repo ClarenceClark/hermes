@@ -3,6 +3,7 @@
             [buddy.core.hash :as hash]
             [buddy.core.nonce :as nonce]
             [buddy.core.codecs :as codecs]
+            [hermes.db.core :as qu]
             [ring.util.http-response :as respond])
   (:import [org.postgresql.util PSQLException]))
 

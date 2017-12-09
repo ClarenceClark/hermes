@@ -4,7 +4,8 @@
             [buddy.auth.accessrules :refer [restrict]]
             [buddy.auth :as auth]
             [hermes.routes.notifs :as notif-routes]
-            [hermes.routes.tags :as tag-routes]))
+            [hermes.routes.tags :as tag-routes]
+            [hermes.routes.user :as user-routes]))
 
 (defapi service-routes
   {:swagger {:ui "/api-docs"
@@ -14,5 +15,6 @@
                            :description ""}}}}
 
   (context "/v1" []
+    user-routes/user-routes
     notif-routes/notif-routes
     tag-routes/tag-routes))

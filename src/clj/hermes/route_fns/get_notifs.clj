@@ -1,5 +1,6 @@
 (ns hermes.route-fns.get-notifs
-  (:require [ring.util.http-response :as resp]))
+  (:require [ring.util.http-response :as resp]
+            [hermes.db.core :as qu]))
 
 (defn get-notif-resp
   "Creates the response to a GET notif for id"

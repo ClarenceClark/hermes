@@ -1,8 +1,7 @@
 -- :name create-notification! :<! :1
 -- :doc create a new notification
-INSERT INTO notifications
-(owner, title, content, sendtime)
-VALUES (:owner, :title, :content, :sendtime)
+INSERT INTO notifications (userid, title, content, sendtime)
+VALUES (:userid, :title, :content, :sendtime)
 RETURNING *;
 
 -- :name get-notifications-after-id :? :*
@@ -18,13 +17,17 @@ WHERE id = :id;
 -- :name get-notifications-for-tag :? :*
 -- :doc retrieve all notifications given a tagid
 SELECT * FROM notifications
-INNER JOIN notif_tag_join
-ON notifications.id = notif_tag_join.notifid
+INNER JOIN notif_tags
+ON notifications.id = notif_tags.notifid
 WHERE tagid = :tagid;
 
 -- :name get-notifications-for-tags-after-id :? :*
 -- :doc retrieve all notifications tagged with tagid
 SELECT * FROM notifications
-INNER JOIN notif_tag_join ON notifications.id = notif_tag_join.notifid
+INNER JOIN notif_tags ON notifications.id = notif_tags.notifid
 WHERE tagid IN (:v*:tagids)
 AND notifications.id > :afterid;
+
+-- :name link-tag-and-notif :? :n
+INSERT INTO notif_tags (userid, notifid, tagid)
+VALUES :tuples*:notif_tags;

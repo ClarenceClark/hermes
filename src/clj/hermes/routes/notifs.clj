@@ -5,13 +5,15 @@
             [hermes.route-fns.create-notif :refer :all]
             [compojure.api.sweet :refer :all]
             [buddy.auth :as auth]
-            [hermes.auth]))
+            [hermes.auth]
+            [hermes.middleware :as mw]))
 
 (def notif-routes
   (context "/notifications" []
     :tags ["api"]
     :auth-rules auth/authenticated?
     :current-user userinfo
+    :header-params [authorization :- String]
 
     (GET "/" []
       :query-params [after :- s/Int

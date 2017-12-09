@@ -5,7 +5,8 @@
             [compojure.api.meta :refer [restructure-param]]
             [buddy.auth.accessrules :refer [restrict]]
             [ring.util.http-response :as resp]
-            [hermes.db.core :as qu]))
+            [hermes.db.core :as qu]
+            [clojure.tools.logging :as log]))
 
 (defn access-error [_ _]
   (resp/unauthorized {:error "unauthorized"}))
@@ -26,18 +27,16 @@
   "Get the user information in a map."
   [email]
   (let [user-info (qu/get-user-by-email {:email email})]
-    (when-not (empty? user-info)
-      user-info
-      nil)))
+    user-info))
 
 (defn- basic-auth
   "Determine if the email corresponds with the password or the apikey. If
   either one matches, returns a map with :id and :email of the user."
   [request auth-data]
-  (let [email (:email auth-data)
+  (let [email (:username auth-data)
         secret (:password auth-data)
         user-info (get-user-info email)]
-    (if (and user-info                                      ; user-info not nil
+    (if (and user-info
              ; Check both apikey and password
              (or (= secret (:apikey user-info))
                  (hash/check secret (:password user-info))))

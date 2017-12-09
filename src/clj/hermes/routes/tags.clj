@@ -5,6 +5,7 @@
             [buddy.auth :as auth]
             [hermes.auth]
             [ring.util.http-response :as resp]
+            [hermes.middleware :as mw]
             [hermes.route-fns.create-tag :refer :all]
             [hermes.route-fns.get-tags :refer :all]
             [hermes.route-fns.get-notifs :refer :all]
@@ -15,6 +16,7 @@
     :tags ["api"]
     :auth-rules auth/authenticated?
     :current-user userinfo
+    :header-params [authorization :- String]
 
     (GET "/" []
       :return [model/Tag]

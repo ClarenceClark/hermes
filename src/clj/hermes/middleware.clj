@@ -111,6 +111,7 @@
 (defn wrap-base [handler]
   (-> ((:middleware defaults) handler)
       wrap-webjars
+      wrap-http-basic
       (wrap-defaults
         (-> site-defaults
             (assoc-in [:security :anti-forgery] false)

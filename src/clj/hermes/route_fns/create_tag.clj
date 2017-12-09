@@ -28,5 +28,6 @@
 (defn create-tag-resp
   "Creates a tag, automatically assigning a unique id"
   [userinfo name]
-  (let [maxid (qu/get-max-easyid {:userid (:id userinfo)})]
+  (let [maxres (qu/get-max-easyid {:userid (:id userinfo)})
+        maxid (or (:max maxres) 0)]
     (create-tag-with-id-resp userinfo (inc maxid) name)))

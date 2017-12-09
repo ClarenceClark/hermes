@@ -3,19 +3,17 @@
             [buddy.auth.backends.httpbasic :as ht]
             [hermes.db.core :as qu]))
 
-(defn get-user-info
-  "Get the user information in a map with keys [:email :passhash]"
+(defn- get-user-info
+  "Get the user information in a map."
   [email]
   (let [user-info (qu/get-user-by-email {:email email})]
-    (when-not (nil? user-info)
-      {:email (:email user-info)
-       :passhash (:passhash user-info)
-       :apikey (:apikey user-info)})))
+    (when-not (empty? user-info)
+      user-info
+      nil)))
 
-(defn basic-auth
+(defn- basic-auth
   "Determine if the email corresponds with the password or the apikey. If
-  either one matches, the email is added to the request with keyword
-  :identity."
+  either one matches, returns a map with :id and :email of the user."
   [request auth-data]
   (let [email (:email auth-data)
         secret (:password auth-data)
@@ -24,10 +22,11 @@
              ; Check both apikey and password
              (or (= secret (:apikey user-info))
                  (hash/check secret (:password user-info))))
-      (:email user-info)
+      (select-keys user-info [:id :email])
       false)))
 
 (def httpbasic-backend
-  "Basic HTTP authentication backend for Buddy"
+  "Basic HTTP authentication backend for Buddy. Adds a map with the keys
+  [:id :email] to the request bound to :identity."
   (ht/http-basic-backend
     {:authfn basic-auth}))

@@ -1,12 +1,13 @@
 (ns hermes.route-fns.create-tag
   (:require [ring.util.http-response :as resp]
             [hermes.db.core :as qu]
-            [hermes.db.utils :as dbutil]))
+            [hermes.db.utils :as dbutil]
+            [clojure.tools.logging :as log]))
 
 (defn create-tag
   "Creates a tag. Assumes it doesn't already exist."
   [userid easyid name]
-  (let [tag (qu/create-tag! {:userid (:id userid)
+  (let [tag (qu/create-tag! {:userid userid
                              :easyid easyid
                              :name name})
         url (str "/tags/" (:easyid tag))]
@@ -20,7 +21,7 @@
                                      :name name})
         idtag (qu/get-tag-by-id {:userid userid
                                  :easyid easyid})
-        tag-exists? (and (nil? nametag) (nil? idtag))]
+        tag-exists? (or nametag idtag)]
     (if tag-exists?
       (resp/conflict {:error "Name or id already exists."})
       (create-tag userid easyid name))))

@@ -17,7 +17,8 @@
             [buddy.auth.middleware :refer [wrap-authentication wrap-authorization]]
             [buddy.auth.accessrules :refer [restrict]]
             [buddy.auth :refer [authenticated?]]
-            [buddy.auth.backends.session :refer [session-backend]])
+            [buddy.auth.backends.session :refer [session-backend]]
+            [ring.util.http-response :as resp])
   (:import [javax.servlet ServletContext]
            [org.joda.time ReadableInstant]))
 
@@ -45,6 +46,16 @@
         (error-page {:status 500
                      :title "Something very bad has happened!"
                      :message "We've dispatched a team of highly trained gnomes to take care of the problem."})))))
+
+(defn wrap-exceptions [handler]
+  (fn [req]
+    (try
+      (handler req)
+      (catch Throwable t
+        (log/error t)
+        (resp/internal-server-error
+          {:cause (.getCause t)
+           :message (.getMessage t)})))))
 
 (defn wrap-csrf [handler]
   (wrap-anti-forgery
@@ -117,4 +128,5 @@
             (assoc-in [:security :anti-forgery] false)
             (assoc-in [:session :store] (ttl-memory-store (* 60 30)))))
       wrap-context
-      wrap-internal-error))
+      wrap-exceptions))
+      ;wrap-internal-error))

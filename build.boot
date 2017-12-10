@@ -31,6 +31,7 @@
                  ; Client deps
                  [cljs-ajax "0.7.3"]
                  [cljs-react-material-ui "0.2.50"]
+                 [cljsjs/material-ui "0.19.2-0"]
                  [org.clojure/clojurescript "1.9.946" :scope "provided"]
                  [org.webjars.bower/tether "1.4.0"]
                  [org.webjars/bootstrap "4.0.0-beta.2"]
@@ -133,7 +134,7 @@
      (watch)
      (cljs-repl)
      (reload :client-opts {:debug true})
-     (speak)
+     ;(speak) ; This is REALLY annoying
      (cljs))))
 
 (deftask run-cljs-tests

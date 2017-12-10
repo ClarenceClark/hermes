@@ -1,16 +1,10 @@
 (set-env!
- :dependencies '[[adzerk/boot-cljs "2.1.4" :scope "test"]
-                 [adzerk/boot-cljs-repl "0.3.3" :scope "test"]
-                 [buddy "2.0.0"]
+ :dependencies '[[buddy "2.0.0"]
                  [ch.qos.logback/logback-classic "1.2.3"]
                  [clj-time "0.14.2"]
-                 [cljs-ajax "0.7.3"]
                  [compojure "1.6.0"]
                  [conman "0.7.4"]
                  [cprop "0.1.11"]
-                 [crisptrutski/boot-cljs-test "0.3.4" :scope "test"]
-                 [deraen/boot-sass "0.3.1" :scope "test"]
-                 [funcool/struct "1.1.0"]
                  [luminus-http-kit "0.1.5"]
                  [luminus-migrations "0.4.3"]
                  [luminus-nrepl "0.1.4"]
@@ -21,25 +15,37 @@
                  [metosin/ring-http-response "0.9.0"]
                  [mount "0.1.11"]
                  [org.clojure/clojure "1.9.0"]
-                 [org.clojure/clojurescript "1.9.946" :scope "provided"]
                  [org.clojure/tools.cli "0.3.5"]
                  [org.clojure/tools.logging "0.4.0"]
                  [org.clojure/tools.reader "1.1.1"]
                  [org.postgresql/postgresql "42.1.4"]
-                 [org.webjars.bower/tether "1.4.0"]
-                 [org.webjars/bootstrap "4.0.0-beta.2"]
-                 [org.webjars/font-awesome "4.7.0"]
-                 [ragtime "0.7.2"]
-                 [re-frame "0.10.2"]
-                 [reagent "0.7.0"]
-                 [reagent-utils "0.2.1"]
                  [ring-webjars "0.2.0"]
                  [ring/ring-core "1.6.3"]
                  [ring/ring-defaults "0.3.1"]
-                 [secretary "1.2.3"]
                  [selmer "1.11.3"]
 
-                 ; Generate lein file
+                 ; Both client and server
+                 [com.rpl/specter "1.0.3"]
+                 [funcool/struct "1.1.0"]
+
+                 ; Client deps
+                 [cljs-ajax "0.7.3"]
+                 [cljs-react-material-ui "0.2.50"]
+                 [org.clojure/clojurescript "1.9.946" :scope "provided"]
+                 [org.webjars.bower/tether "1.4.0"]
+                 [org.webjars/bootstrap "4.0.0-beta.2"]
+                 [org.webjars/font-awesome "4.7.0"]
+                 [re-com "2.1.0"]
+                 [re-frame "0.10.2"]
+                 [reagent "0.7.0"]
+                 [reagent-utils "0.2.1"]
+                 [secretary "1.2.3"]
+
+                 ; Boot deps
+                 [crisptrutski/boot-cljs-test "0.3.4" :scope "test"]
+                 [deraen/boot-sass "0.3.1" :scope "test"]
+                 [adzerk/boot-cljs "2.1.4" :scope "test"]
+                 [adzerk/boot-cljs-repl "0.3.3" :scope "test"]
                  [onetom/boot-lein-generate "0.1.3" :scope "test"]]
 
  :source-paths #{"src/cljs" "src/cljc" "src/clj"}
@@ -56,20 +62,21 @@
   (set-env!
    :source-paths #(conj % "env/dev/clj" "src/cljs" "src/cljc" "env/dev/cljs")
    :resource-paths #(conj % "env/dev/resources")
-   :dependencies #(concat % '[[prone "1.1.4"]
-                              [ring/ring-mock "0.3.0"]
-                              [ring/ring-devel "1.6.1"]
-                              [pjstadig/humane-test-output "0.8.2"]
-                              [binaryage/devtools "0.9.7"]
-                              [com.cemerick/piggieback "0.2.2"]
-                              [crisptrutski/boot-cljs-test "0.3.2-SNAPSHOT" :scope "test"]
-                              [doo "0.1.8"]
-                              [figwheel-sidecar "0.5.14"]
-                              [org.clojure/clojurescript cljs-version :scope "test"]
-                              [org.clojure/tools.nrepl "0.2.12" :scope "test"]
-                              [pandeiro/boot-http "0.7.6" :scope "test"]
-                              [powerlaces/boot-figreload "0.1.1-SNAPSHOT" :scope "test"]
-                              [weasel "0.7.0" :scope "test"]]))
+   :dependencies
+   #(concat % '[[prone "1.1.4"]
+                [ring/ring-mock "0.3.0"]
+                [ring/ring-devel "1.6.1"]
+                [pjstadig/humane-test-output "0.8.2"]
+                [binaryage/devtools "0.9.7"]
+                [com.cemerick/piggieback "0.2.2"]
+                [crisptrutski/boot-cljs-test "0.3.2-SNAPSHOT" :scope "test"]
+                [doo "0.1.8"]
+                [figwheel-sidecar "0.5.14"]
+                [org.clojure/clojurescript cljs-version :scope "test"]
+                [org.clojure/tools.nrepl "0.2.12" :scope "test"]
+                [pandeiro/boot-http "0.7.6" :scope "test"]
+                [powerlaces/boot-figreload "0.1.1-SNAPSHOT" :scope "test"]
+                [weasel "0.7.0" :scope "test"]]))
   (System/setProperty "database-url"
                       "postgres://hermes@localhost:5432/hermes_dev")
   (task-options!

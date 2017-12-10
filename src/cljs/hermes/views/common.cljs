@@ -21,6 +21,11 @@
      [ui/drawer {:open @open?
                  :on-request-change #(rf/dispatch [:ui.set-navdrawer-open? %])
                  :docked false}
+      [ui/list-item {:disabled true
+                     :class-name "nav-label"
+                     :style {:font-size "28px"
+                             :margin "36px 18px 24px"}}
+       "Hermes"]
       [naventry @curpage ic/action-toc
        "Notifications" "/#/notifications" :notifications]
       [naventry @curpage ic/action-loyalty

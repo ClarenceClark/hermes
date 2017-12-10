@@ -7,3 +7,6 @@ html, body {
   -webkit-touch-callout: none;
   -moz-user-select: none;
   user-select: none; }
+
+.tags-list {
+  max-width: 500px; }

@@ -3,8 +3,9 @@
             [cljs-react-material-ui.core :as mui]
             [cljs-react-material-ui.reagent :as ui]
             [re-frame.core :as rf]
-            [hermes.views.common :as nav]
+            [hermes.views.common :as common]
             [hermes.views.notifs :as notifs]
+            [hermes.views.tags :as tags]
             [reagent.core :as r]
             [cljs-react-material-ui.icons :as ic]))
 
@@ -37,4 +38,4 @@
 (defn main-all []
   [ui/mui-theme-provider {:mui-theme (mui/get-mui-theme)}
    [:div.application
-    [notifs/notifs-page]]])
+    [tags/tags-page]]])

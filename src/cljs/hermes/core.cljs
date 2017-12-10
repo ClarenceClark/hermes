@@ -13,6 +13,7 @@
             ; Load subs and events
             [hermes.subevts.core]
             [hermes.subevts.notifs]
+            [hermes.subevts.tags]
             [hermes.subevts.ui]
             [hermes.subevts.utils])
 

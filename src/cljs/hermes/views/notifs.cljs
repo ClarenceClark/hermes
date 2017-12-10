@@ -10,8 +10,9 @@
 (defn notifs-elem
   [{:keys [id title content time tags]}]
   [ui/list-item
-   [:div.notif__elem
-    [:span.notif__time (fmt/unparse time-fmt time)]
+   [:div.notif__elem.noselect
+    [:span.notif__time
+     (fmt/unparse time-fmt time)]
     ": "
     [:span.notif__title title]]])
 

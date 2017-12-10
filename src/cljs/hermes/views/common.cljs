@@ -8,7 +8,7 @@
 (defn naventry
   [curpage icon name path page]
   [ui/list-item {:left-icon (icon)
-                 :disabled (= curpage page)
+                 ;:disabled (= curpage page)
                  :on-click #(rf/dispatch [:ui.set-current-page page])}
    name])
 
@@ -17,7 +17,7 @@
   []
   (let [curpage (rf/subscribe [:ui.current-page])
         open? (rf/subscribe [:ui.navdrawer-open?])]
-    [:div.nav-drawer
+    [:div.nav-drawer.noselect
      [ui/drawer {:open @open?
                  :on-request-change #(rf/dispatch [:ui.set-navdrawer-open? %])
                  :docked false}

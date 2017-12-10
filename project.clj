@@ -54,9 +54,15 @@
 
   :migratus {:store :database :db ~(get (System/getenv) "DATABASE_URL")}
 
+  :sass {:src "resources/scss"
+         :output-directory "resources/public/css"
+         :source-maps false
+         :command :sassc}
+
   :plugins [[lein-cprop "1.0.3"]
             [lein-ancient "0.6.14"]
             [migratus-lein "0.5.3"]
+            [lein-sass "0.4.0"]
             [lein-cljsbuild "1.1.5"]]
 
   :clean-targets ^{:protect false}

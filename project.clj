@@ -7,6 +7,8 @@
                  [ch.qos.logback/logback-classic "1.2.3"]
                  [clj-time "0.14.0"]
                  [cljs-ajax "0.7.3"]
+                 [cljs-react-material-ui "0.2.50"]
+                 [com.rpl/specter "1.0.3"]
                  [compojure "1.6.0"]
                  [conman "0.7.4"]
                  [cprop "0.1.11"]

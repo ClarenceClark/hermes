@@ -10,7 +10,7 @@
     db/default-db))
 
 ; Docs
-(utils/reg-subevt-pair :docs :set-docs [:docs])
+(utils/reg-subevt-pair :docs :set-docs [:docs :docs])
 
 ; Username and apikey
 (utils/reg-subevt-pair :login.username :login.set-username [:login :username])

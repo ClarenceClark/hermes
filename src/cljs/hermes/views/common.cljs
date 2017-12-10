@@ -21,13 +21,16 @@
      [ui/drawer {:open @open?
                  :on-request-change #(rf/dispatch [:ui.set-navdrawer-open? %])
                  :docked false}
-      [naventry @curpage ic/content-inbox "/notifications" :notifications]
-      [naventry @curpage ic/image-tag-faces "/tags" :tags]
-      [naventry @curpage ic/action-settings "/settings" :settings]]]))
+      [naventry @curpage ic/content-inbox
+       "Notifications" "/notifications" :notifications]
+      [naventry @curpage ic/image-tag-faces
+       "Tags" "/tags" :tags]
+      [naventry @curpage ic/action-settings
+       "Settings ""/settings" :settings]]]))
 
 (defn appbar
   "Appbar for the app. Does not hame theming."
   []
-  [ui/app-bar {:name "Hermes"
+  [ui/app-bar {:title "Hermes"
                :on-left-icon-button-touch-tap
                #(rf/dispatch [:ui.toggle-navdrawer-open?])}])

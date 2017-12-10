@@ -5,6 +5,7 @@
             [goog.events :as events]
             [goog.history.EventType :as HistoryEventType]
             [ajax.core :refer [GET POST]]
+            [re-frisk.core :as re-frisk]
 
             [hermes.ajax :refer [load-interceptors!]]
             [hermes.views.core :as views]
@@ -55,8 +56,13 @@
   (r/render [views/main-all]
             (.getElementById js/document "app")))
 
+(def debug? goog.DEBUG)
+
 (defn init! []
   (rf/dispatch-sync [:init-db])
+  (when debug?
+    (enable-console-print!)
+    (re-frisk/enable-re-frisk!))
   (load-interceptors!)
   (fetch-docs!)
   (hook-browser-navigation!)

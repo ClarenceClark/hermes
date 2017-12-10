@@ -5,5 +5,5 @@
            :apikey ""}
    :ui {:current-page :home
         :navdrawer-open? false}
-   :docs ""})
+   :docs {:docs ""}})
 

@@ -33,6 +33,7 @@
                  [org.webjars/bootstrap "4.0.0-beta.2"]
                  [org.webjars/font-awesome "4.7.0"]
                  [re-frame "0.10.2"]
+                 [re-frisk "0.5.3"]
                  [reagent "0.7.0"]
                  [reagent-utils "0.2.1"]
                  [ring-webjars "0.2.0"]

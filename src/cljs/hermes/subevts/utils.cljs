@@ -50,4 +50,4 @@
     evname
     (fn [db _]
       (let [oldval (get-in db dbpath)]
-        (assoc db dbpath (not oldval))))))
+        (assoc-in db dbpath (not oldval))))))

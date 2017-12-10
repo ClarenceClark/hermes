@@ -31,6 +31,7 @@
                  ; Client deps
                  [cljs-ajax "0.7.3"]
                  [cljs-react-material-ui "0.2.50"]
+                 [com.andrewmcveigh/cljs-time "0.5.2"]
                  [cljsjs/material-ui "0.19.2-0"]
                  [org.clojure/clojurescript "1.9.946" :scope "provided"]
                  [org.webjars.bower/tether "1.4.0"]
@@ -133,7 +134,7 @@
     (comp
      (start-server)
      (watch)
-     (cljs-repl)
+     (cljs-repl :nrepl-opts {:port 7002})
      (reload :client-opts {:debug true})
      ;(speak) ; This is REALLY annoying
      (cljs))))

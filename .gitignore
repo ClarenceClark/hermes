@@ -88,3 +88,4 @@ log/
 .lein-env
 .nrepl-history
 .DS_Store
+figwheel_server.log

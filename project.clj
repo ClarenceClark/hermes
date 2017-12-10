@@ -8,6 +8,7 @@
                  [clj-time "0.14.0"]
                  [cljs-ajax "0.7.3"]
                  [cljs-react-material-ui "0.2.50"]
+                 [com.andrewmcveigh/cljs-time "0.5.2"]
                  [cljsjs/material-ui "0.19.2-0"]
                  [com.rpl/specter "1.0.3"]
                  [compojure "1.6.0"]

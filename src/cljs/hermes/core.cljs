@@ -12,7 +12,9 @@
 
             ; Load subs and events
             [hermes.subevts.core]
-            [hermes.subevts.ui])
+            [hermes.subevts.notifs]
+            [hermes.subevts.ui]
+            [hermes.subevts.utils])
 
   (:import goog.History))
 

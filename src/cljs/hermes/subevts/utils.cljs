@@ -26,7 +26,7 @@
   (reg-keyword-diff-sub sub-name sub-name))
 
 (defn reg-nested-sub
-  "Register a subscription where the access-key"
+  "Register a subscription that maps the access-key to the given path"
   [sub-name path]
   (rf/reg-sub sub-name
               (fn [db dyn]

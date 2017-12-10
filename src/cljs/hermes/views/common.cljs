@@ -22,11 +22,11 @@
                  :on-request-change #(rf/dispatch [:ui.set-navdrawer-open? %])
                  :docked false}
       [naventry @curpage ic/action-toc
-       "Notifications" "/notifications" :notifications]
+       "Notifications" "/#/notifications" :notifications]
       [naventry @curpage ic/action-loyalty
-       "Tags" "/tags" :tags]
+       "Tags" "/#/tags" :tags]
       [naventry @curpage ic/action-settings
-       "Settings ""/settings" :settings]]]))
+       "Settings " "/#/settings" :settings]]]))
 
 (defn appbar
   "Appbar for the app. Does not hame theming."

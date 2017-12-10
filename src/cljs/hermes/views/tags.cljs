@@ -1,7 +1,11 @@
-(ns hermes.views.tags)
+(ns hermes.views.tags
+  (:require [hermes.views.common :as common]))
 
 (defn tags-page
   "Tags page"
   []
-  (let [a "b"]
-    [:div "tags"]))
+  [:div.tags-page
+   [common/appbar]
+   [common/nav-drawer]
+   [:div.tags-list {:style {:margin "24px 48px"}}]])
+

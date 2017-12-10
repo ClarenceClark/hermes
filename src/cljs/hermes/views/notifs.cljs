@@ -11,12 +11,25 @@
   [{:keys [id title content time tags]}]
   [ui/list-item
    [:div.notif__elem
-    [ui/mui-theme-provider
-     {:mui-theme (cui/get-mui-theme
-                   {:palette {:text-color (cui/color :grey600)}})}
-     [:span.notif__time (fmt/unparse time-fmt time)]]
+    [:span.notif__time (fmt/unparse time-fmt time)]
     ": "
     [:span.notif__title title]]])
+
+(defn notif-detail-dialog
+  "Dialog showing notif details"
+  []
+  (let [active-notif (rf/subscribe [:ui.active-notif])
+        should-show? (rf/subscribe [:ui.show-notif-detail?])
+        close-notif-fn #(rf/dispatch [:ui.set-show-notif-detail? false])]
+    [ui/dialog
+     {:actions (ui/flat-button
+                 {:label "Close"
+                  :on-click close-notif-fn})
+      :title (:title @active-notif)
+      :modal false
+      :open @should-show?
+      :on-request-close close-notif-fn}
+     [:div.notif__content]]))
 
 (defn notifs-page
   "The main notifications page"
@@ -28,3 +41,4 @@
     (for [notif @(rf/subscribe [:notifs.all])]
       ^{:key (:id notif)}
       [notifs-elem notif])]])
+   ;[notif-detail-dialog]])

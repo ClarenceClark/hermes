@@ -16,26 +16,29 @@ html, body
     height: inherit
     width: inherit
 
-.page-over
+.page
   height: inherit
 
-.page
-  height: 100%
-  display: flex
-  justify-content: center
-  align-content: center
-  background-color: rgba(0,0,0,0.2)
+  .page__container
+    height: 100%
+    display: flex
+    justify-content: center
+    align-content: center
+    background-color: rgba(0,0,0,0.2)
 
-.page-container
-  min-width: 600px
-  max-width: 720px
-  width: 100%
-  height: auto
-  margin: 48px
+  .page__fl-paper
+    min-width: 600px
+    max-width: 720px
+    width: 100%
+    height: auto
+    margin: 48px
 
-.page-content
-  padding: 18px
+  .page__content
+    padding: 18px
 
   .page__label
     font-size: 32px
     padding: 18px
+
+.add-tag
+  font-size: 32px

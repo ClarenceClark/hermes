@@ -15,14 +15,16 @@
 (defn tags-page
   "Tags page"
   []
-  [:div.tags-page.page-over
+  [:div.tags-page.page
    [common/appbar]
    [common/nav-drawer]
-   [:div.page
-    [ui/paper {:z-depth 1
-               :class-name "page-container"}
-     [:div.page-content
+   [:div.page__container
+    [ui/paper {:z-depth 2
+               :class-name "page__fl-paper"}
+     [:div.page__content
       [:div.page__label "Tags"]
+      [ui/icon-button {:class-name "add-tag"}
+       (ic/content-add)]
       [ui/table {:selectable false
                  :multi-selectable false
                  :fixed-header false

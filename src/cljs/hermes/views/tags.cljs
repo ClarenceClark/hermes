@@ -19,7 +19,7 @@
    [common/appbar]
    [common/nav-drawer]
    [:div.page__container
-    [ui/paper {:z-depth 2
+    [ui/paper {:z-depth 1
                :class-name "page__fl-paper"}
      [:div.page__content
       [:div.page__label "Tags"]

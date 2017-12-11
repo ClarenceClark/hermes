@@ -5,10 +5,14 @@
     [cljs-react-material-ui.icons :as ic]
     [re-frame.core :as rf]))
 
+(defn- naventry-container
+  [path]
+  [:a {:href path}])
+
 (defn naventry
   [curpage icon name path page]
   [ui/list-item {:left-icon (icon)
-                 ;:disabled (= curpage page)
+                 :href path
                  :on-click #(rf/dispatch [:ui.set-current-page page])}
    name])
 
@@ -30,11 +34,6 @@
                  :on-request-change #(rf/dispatch [:ui.set-navdrawer-open? %])
                  :docked false}
       [appbar]
-      ;[ui/list-item {:disabled true
-      ;               :class-name "nav-label"
-      ;               :style {:font-size "28px"
-      ;                       :margin "36px 18px 24px"}}
-      ; "Hermes"]
       [naventry @curpage ic/action-toc
        "Notifications" "/#/notifications" :notifications]
       [naventry @curpage ic/action-loyalty

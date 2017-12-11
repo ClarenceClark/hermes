@@ -54,16 +54,3 @@
    (r/as-element [ui/flat-button {:label "Confirm"
                                   :primary true
                                   :on-click confirm-fn}])])
-
-(defn tags-icon-selet [icon get-ev set-ev]
-  [ui/icon-menu
-   {:icon-button-element
-    (r/as-element [ui/icon-button icon])
-    :multiple true
-    :value (clj->js @(rf/subscribe [get-ev]))
-    :on-change #(rf/dispatch [set-ev (js->clj %2)])}
-
-   (for [tag @(rf/subscribe [:tags.all])]
-     ^{:key (:id tag)}
-     [ui/menu-item {:primary-text (:name tag)
-                    :value (:id tag)}])])

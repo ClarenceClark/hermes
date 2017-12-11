@@ -10,12 +10,23 @@
 
 (def time-fmt (fmt/formatter "yyyy-MM-dd HH:MM:ss"))
 
-(defn textfield-cfn [ev]
-  #(rf/dispatch [ev (.-value (.-target %))]))
+(defn tags-icon-select [icon get-ev set-ev]
+  [ui/icon-menu
+   {:icon-button-element
+    (r/as-element [ui/icon-button icon])
+    :multiple true
+    :value (clj->js @(rf/subscribe [get-ev]))
+    :touch-tap-close-delay 0
+    :on-change #(rf/dispatch [set-ev (js->clj %2)])}
+
+   (for [tag @(rf/subscribe [:tags.all])]
+     ^{:key (:id tag)}
+     [ui/menu-item {:primary-text (:name tag)
+                    :value (:id tag)}])])
 
 (defn notifs-elem
-  [{:keys [id title content time tags]}]
-  [ui/list-item
+  [{:keys [id title content time tags] :as tag}]
+  [ui/list-item {:on-click #(rf/dispatch [:ui.set-active-notif tag])}
    [:div.notif__elem.noselect
     [:span.notif__time
      (fmt/unparse time-fmt time)]
@@ -24,6 +35,7 @@
 
 (defn disp-text-field [label value]
   [ui/text-field {:floating-label-text label
+                  ;:disabled true
                   :full-width true
                   :value value}])
 
@@ -31,7 +43,7 @@
   "Dialog showing notif details"
   []
   (let [active-notif (rf/subscribe [:ui.active-notif])
-        close-notif-fn #(rf/dispatch [:ui.create-notif.cancel])]
+        close-notif-fn #(rf/dispatch [:ui.set-active-notif :none])]
     [ui/dialog
      {:actions (r/as-element [ui/flat-button {:label "Close"
                                               :on-click close-notif-fn}])
@@ -68,7 +80,7 @@
                      :on-change (cm/text-cfn :ui.create-notif.set-content)
                      :value @(rf/subscribe [:ui.create-notif.content])}]
      [:br]
-     [cm/tags-icon-selet (ic/action-loyalty)
+     [tags-icon-select (ic/action-loyalty)
       :ui.create-notif.tags :ui.create-notif.set-tags]]))
 
 (defn- notifs-toolbar []
@@ -77,7 +89,7 @@
    [ui/toolbar-group {:last-child true}
 
     ; Tags filter menu
-    [cm/tags-icon-selet (ic/content-filter-list) :ui.filter-tags :ui.set-filter-tags]
+    [tags-icon-select (ic/content-filter-list) :ui.filter-tags :ui.set-filter-tags]
 
     [ui/raised-button {:label "New Notif"
                        :on-click

@@ -17,6 +17,12 @@ html, body {
 
 .page {
   height: inherit; }
+  .page .page__head .page__add-btn {
+    display: inline-block; }
+  .page .page__label {
+    font-size: 32px;
+    display: inline-block;
+    padding: 18px; }
   .page .page__container {
     height: 100%;
     display: flex;
@@ -31,9 +37,3 @@ html, body {
     margin: 48px; }
   .page .page__content {
     padding: 18px; }
-  .page .page__label {
-    font-size: 32px;
-    padding: 18px; }
-
-.add-tag {
-  font-size: 32px; }

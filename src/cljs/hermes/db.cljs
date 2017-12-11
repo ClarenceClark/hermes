@@ -17,8 +17,13 @@
 (def default-db
   {:login {:username ""
            :apikey ""}
-   :ui {:current-page :home
-        :navdrawer-open? false}
+   :ui {:active-notif :none
+        :current-page :home
+        :navdrawer-open? false
+        :create-notif {:show? false
+                       :title ""
+                       :content ""
+                       :tags #{}}}
    :docs {:docs ""}
    :tags (apply merge (generate-tags))
    :notifs (apply merge (generate-notifs))})

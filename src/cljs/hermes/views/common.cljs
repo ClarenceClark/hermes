@@ -3,7 +3,8 @@
     [cljsjs.material-ui]
     [cljs-react-material-ui.reagent :as ui]
     [cljs-react-material-ui.icons :as ic]
-    [re-frame.core :as rf]))
+    [re-frame.core :as rf]
+    [reagent.core :as r]))
 
 (defn- naventry-container
   [path]
@@ -43,3 +44,26 @@
        "Tags" "/#/tags" :tags]
       [naventry @curpage ic/action-settings
        "Settings " "/#/settings" :settings]]]))
+
+(defn text-cfn [event]
+  #(rf/dispatch [event (.-value (.-target %))]))
+
+(defn dialog-confirm-cancel-actions [cancel-fn confirm-fn]
+  [(r/as-element [ui/flat-button {:label "Cancel"
+                                  :on-click cancel-fn}])
+   (r/as-element [ui/flat-button {:label "Confirm"
+                                  :primary true
+                                  :on-click confirm-fn}])])
+
+(defn tags-icon-selet [icon get-ev set-ev]
+  [ui/icon-menu
+   {:icon-button-element
+    (r/as-element [ui/icon-button icon])
+    :multiple true
+    :value (clj->js @(rf/subscribe [get-ev]))
+    :on-change #(rf/dispatch [set-ev (js->clj %2)])}
+
+   (for [tag @(rf/subscribe [:tags.all])]
+     ^{:key (:id tag)}
+     [ui/menu-item {:primary-text (:name tag)
+                    :value (:id tag)}])])

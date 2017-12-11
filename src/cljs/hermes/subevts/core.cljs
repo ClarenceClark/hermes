@@ -1,8 +1,7 @@
 (ns hermes.subevts.core
   (:require [re-frame.core :as rf]
             [hermes.db :as db]
-            [hermes.subevts.utils :as utils]
-            [hermes.subevts.ui]))
+            [hermes.subevts.utils :as utils]))
 
 (rf/reg-event-db
   :init-db

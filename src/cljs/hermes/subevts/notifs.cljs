@@ -1,6 +1,7 @@
 (ns hermes.subevts.notifs
   (:require [hermes.subevts.utils :as utils]
-            [re-frame.core :as rf]))
+            [re-frame.core :as rf]
+            [clojure.set :as set]))
 
 (utils/reg-keyword-diff-sub :notifs.map :notifs)
 
@@ -14,11 +15,17 @@
 
 (rf/reg-sub
   :notifs.to-show
-  :<- [:notifs.map]
-  :<- [:ui.tag-filter]
-  :<- [:prefs.view-limit]
-  (fn [[notifs-map filter limit] sub dyn]
-    (let [filter-fn #(contains? (:tags %) filter)])))
+  :<- [:notifs.all]
+  :<- [:ui.filter-tags]
+  (fn [[notifs-all filter-tags] sub dyn]
+    (let [filters (set filter-tags)
+          filter-fn #(< 0 (count (set/intersection (:tags %1) filters)))
+          ; Select only notifs where its tags and the filters intersect
+          filtered (filter filter-fn notifs-all)
+          ;_ (println filtered)
+          sorted (sort-by :id > filtered)]
+      sorted)))
+
 
 (rf/reg-event-db
   :notifs.ins-db

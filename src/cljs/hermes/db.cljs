@@ -12,12 +12,13 @@
         :title (str "Notif #" i)
         :content (str "Lots of content here, notif#" i)
         :time (t/now)
-        :tags [1 2]}}))
+        :tags #{1 2}}}))
 
 (def default-db
   {:login {:username ""
            :apikey ""}
-   :ui {:active-notif :none
+   :ui {:filter-tags []
+        :active-notif :none
         :current-page :home
         :navdrawer-open? false
         :create-notif {:show? false

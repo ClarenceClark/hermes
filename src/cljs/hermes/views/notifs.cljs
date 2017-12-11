@@ -89,7 +89,8 @@
    [ui/toolbar-group {:last-child true}
 
     ; Tags filter menu
-    [tags-icon-select (ic/content-filter-list) :ui.filter-tags :ui.set-filter-tags]
+    [tags-icon-select (ic/content-filter-list)
+     :ui.filter-tags :ui.set-filter-tags]
 
     [ui/raised-button {:label "New Notif"
                        :on-click
@@ -108,7 +109,7 @@
 
      ; List of all notifs
      [ui/list
-      (for [notif @(rf/subscribe [:notifs.all])]
+      (for [notif @(rf/subscribe [:notifs.to-show])]
         ^{:key (:id notif)}
         [notifs-elem notif])]
 

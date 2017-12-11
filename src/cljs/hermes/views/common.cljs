@@ -13,7 +13,10 @@
   [curpage icon name path page]
   [ui/list-item {:left-icon (icon)
                  :href path
-                 :on-click #(rf/dispatch [:ui.set-current-page page])}
+                 ; Close nav when a path is clicked
+                 ; Secretary will route to the correct page, we don't
+                 ; need to handle that here
+                 :on-click #(rf/dispatch [:ui.toggle-navdrawer-open?])}
    name])
 
 (defn appbar

@@ -13,6 +13,12 @@
   (fn [tags-map sub dyn]
     (vals tags-map)))
 
+(rf/reg-sub
+  :tags.sorted
+  :<- [:tags.all]
+  (fn [tags _ _]
+    (sort-by :id < tags)))
+
 (rf/reg-event-db
   :tags.set-by-id
   [(rf/path :tags) rf/trim-v]

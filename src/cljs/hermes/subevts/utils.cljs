@@ -57,11 +57,3 @@
     (fn [db _]
       (let [oldval (get-in db dbpath)]
         (assoc-in db dbpath (not oldval))))))
-
-(defn reg-network-done-pair [reg-key val-disp snackbar-msg]
-  (rf/reg-event-fx
-    reg-key
-    (fn [cofx [_ ret-val]]
-      (println reg-key val-disp ret-val)
-      {:dispatch-n [[val-disp ret-val]
-                    [:ui.set-snackbar-msg snackbar-msg]]})))

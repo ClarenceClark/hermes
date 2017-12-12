@@ -111,6 +111,6 @@
 
        ; Table body
        [ui/table-body {:display-row-checkbox false}
-        (for [tag @(rf/subscribe [:tags.all])]
+        (for [tag @(rf/subscribe [:tags.sorted])]
           ^{:key tag}
           [tag-elem tag])]]]]]])

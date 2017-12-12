@@ -8,6 +8,11 @@
   (fn [db _]
     db/default-db))
 
+(rf/reg-event-fx
+  :the-void
+  (fn [_ _]
+    {}))
+
 ; Docs
 (utils/reg-subevt-pair :docs :set-docs [:docs :docs])
 

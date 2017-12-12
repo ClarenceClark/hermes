@@ -53,29 +53,32 @@
           notif (-> db
                     (get-in [:ui :create-notif])
                     (select-keys [:title :content :tags]))]
-      {:dispatch [:ui.set-sending-notif? true]
+      {:dispatch [:ui.set-snackbar-msg "Sending notif ..."]
        :http-xhrio
        (nt/merge-defaults db
-         {:method :get
+         {:method :post
           :uri (str nt/api-base "/notifications")
           :params notif
           :on-success [:notifs.send-success]
           :on-failure [:notifs.send-fail]})})))
 
 (rf/reg-event-fx
-  :notifs.send-success
-  (fn [cofx [_ notif]]
-    {:dispatch-n [[:notifs.ins-one notif]
-                  [:ui.set-sending-notif? false]]}))
+  :notifs.retrieve
+  (fn [{:keys [db]} _]
+    {:dispatch [:ui.set-snackbar-msg "Retrieving notifs ..."]
+     :http-xhrio
+     (nt/merge-defaults db
+        {:method :get
+         :uri (str nt/api-base "/notifications")
+         :params {}
+         :on-success [:notifs.fetch-success]
+         :on-failure [:notifs.fetch-failure]})}))
 
-(rf/reg-event-fx
-  :notifs.send-fail
-  (fn [_ _]
-    {:dispatch-n [[:ui.set-sending-notif? false]
-                  [:notifs.]]}))
+(def network-evs
+  [[:notifs.send-success :notifs.ins-one "Notif sent"]
+   [:notifs.send-fail :the-void "Failed to send notif"]
+   [:notifs.fetch-success :notifs.ins-multi "Notifs retrieved"]
+   [:notifs.fetch-fail :the-void "Failed to retrieve notifs"]])
 
-(rf/reg-event-db
-  :notifs.fetch-success
-  (fn [cofx [_ notifs]]
-    {:dispatch-n [[:notifs.ins-multi notifs]
-                  [:ui.set-fetching-notifs? false]]}))
+(doseq [[a b c] network-evs]
+  (utils/reg-network-done-pair a b c))

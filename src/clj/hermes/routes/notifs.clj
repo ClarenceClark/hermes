@@ -13,11 +13,11 @@
     :tags ["api"]
     :auth-rules auth/authenticated?
     :current-user userinfo
-    :header-params [authorization :- String]
+    :header-params [authorization :- s/Str]
 
     (GET "/" []
-      :query-params [after :- s/Int
-                     tags :- [s/Int]]
+      :query-params [{after :- s/Int 0}
+                     {tags :- [s/Int] []}]
       :return [model/Notif]
       :summary "Get all notifications where id is after the specified value"
       :description

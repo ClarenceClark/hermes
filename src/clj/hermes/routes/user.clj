@@ -27,4 +27,4 @@
        authenticated. Use this to validate login information in apps. Throws
        a 403 if you are not. I think. I really should be sleeping, but this
        thing is due tomorrow."
-      (usr/get-user-resp userinfo))))
+      (usr/get-user-resp user-info))))

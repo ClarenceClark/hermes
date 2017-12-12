@@ -37,7 +37,7 @@
    they can be trying to validate their apikey? Who knows. I just write apis.
    I don't to psychological analysis of devs using my apis."
   [userinfo]
-  (let [user (qu/get-user-by-id {:id (:id user)})]
+  (let [user (qu/get-user-by-id {:id (:id userinfo)})]
     (if (not-empty user)
       (respond/ok (select-keys user [:email :apikey]))
       (respond/internal-server-error

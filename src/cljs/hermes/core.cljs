@@ -63,6 +63,7 @@
 
 (defn init! []
   (rf/dispatch-sync [:init-db])
+  (rf/dispatch [:fetch-data])
   (when debug?
     (enable-console-print!)
     (re-frisk/enable-re-frisk!))

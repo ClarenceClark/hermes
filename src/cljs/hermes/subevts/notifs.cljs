@@ -2,11 +2,14 @@
   (:require [hermes.subevts.utils :as utils]
             [re-frame.core :as rf]
             [clojure.set :as set]
-            [hermes.subevts.network :as nt]))
+            [hermes.subevts.network :as nt]
+            [cljs-time.format :as fmt]))
 
 (utils/reg-keyword-diff-sub :notifs.map :notifs)
 
 (def notif-int [(rf/path :notifs) rf/trim-v])
+
+(def bsc-dt (fmt/formatters :basic-date-time))
 
 (rf/reg-sub
   :notifs.all
@@ -31,18 +34,20 @@
 (rf/reg-event-db
   :notifs.ins-one
   [notif-int]
-  (fn [notif-map [id title content time tags]]
+  (fn [notif-map {:keys [id title content time tags]}]
     (assoc notif-map id {:id id
                          :title title
                          :content content
-                         :time time
+                         :time (fmt/parse bsc-dt time)
                          :tags tags})))
 
 (rf/reg-event-db
   :notifs.ins-multi
   [notif-int]
   (fn [notif-map [notifs]]
-    (let [tuples (map (fn [n] [(:id n) n] notifs))
+    (let [timed (map (fn [n] (update-in n [:time] #(fmt/parse bsc-dt %))) notifs)
+          ;_ (println timed)
+          tuples (map (fn [n] [(:id n) n]) timed)
           new (into {} tuples)]
       (merge notif-map new))))
 
@@ -63,22 +68,40 @@
           :on-failure [:notifs.send-fail]})})))
 
 (rf/reg-event-fx
+  :notifs.send-success
+  (fn [cofx [_ notif]]
+    {:dispatch-n [[:notifs.ins-one notif]
+                  [:ui.set-snackbar-msg "Notification sent successfully"]
+                  [:ui.create-notif.set-show? false]
+                  [:notifs.retrieve]]}))
+
+(rf/reg-event-fx
+  :notifs.send-fail
+  (fn [cofx [_ fail]]
+    {:dispatch-n [[:ui.set-snackbar-msg
+                   (str "Notification failed to send" (:error fail))]]}))
+
+(rf/reg-event-fx
   :notifs.retrieve
   (fn [{:keys [db]} _]
-    {:dispatch [:ui.set-snackbar-msg "Retrieving notifs ..."]
+    {:dispatch-n [[:tags.retrieve]
+                  [:ui.set-snackbar-msg "Retrieving notifs ..."]]
      :http-xhrio
      (nt/merge-defaults db
         {:method :get
          :uri (str nt/api-base "/notifications")
-         :params {}
+         :params {:after (or (apply max (vals (:notifs db))) 0)}
          :on-success [:notifs.fetch-success]
          :on-failure [:notifs.fetch-failure]})}))
 
-(def network-evs
-  [[:notifs.send-success :notifs.ins-one "Notif sent"]
-   [:notifs.send-fail :the-void "Failed to send notif"]
-   [:notifs.fetch-success :notifs.ins-multi "Notifs retrieved"]
-   [:notifs.fetch-fail :the-void "Failed to retrieve notifs"]])
+(rf/reg-event-fx
+  :notifs.fetch-success
+  (fn [cofx [_ notifs]]
+    {:dispatch-n [[:notifs.ins-multi notifs]
+                  [:ui.set-snackbar-msg "Notifications retrieved successfully"]]}))
 
-(doseq [[a b c] network-evs]
-  (utils/reg-network-done-pair a b c))
+(rf/reg-event-fx
+  :notifs.fetch-failure
+  (fn [cofx [_ fail]]
+    {:dispatch-n [[:ui.set-snackbar-msg
+                   (str "Failed to retrieve notifications" (:error fail))]]}))

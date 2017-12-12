@@ -33,5 +33,5 @@
                        :content ""
                        :tags #{}}}
    :docs {:docs ""}
-   :tags (apply merge (generate-tags))
-   :notifs (apply merge (generate-notifs))})
+   :tags {}
+   :notifs {}})

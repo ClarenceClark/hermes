@@ -22,14 +22,15 @@
 (rf/reg-event-db
   :tags.ins-one
   [tags-int]
-  (fn [tags-map [id name]]
+  (fn [tags-map {:keys [id name]}]
+    (println id name)
     (assoc tags-map id name)))
 
 (rf/reg-event-db
   :tags.ins-multi
   [tags-int]
   (fn [tags-map [tags]]
-    (let [tuples (map (fn [n] [(:id n) n] tags))
+    (let [tuples (map (fn [n] [(:id n) n]) tags)
           new (into {} tuples)]
       (merge tags-map new))))
 
@@ -55,7 +56,7 @@
     (let [db (:db cofx)
           tag (-> db
                   (get-in [:ui :tag-add])
-                  (select-keys [:id :name]))]
+                  (select-keys [:name]))]
       {:dispatch [:ui.set-snackbar-msg "Adding new tag ..."]
        :http-xhrio
        (nt/merge-defaults db
@@ -68,6 +69,7 @@
 (rf/reg-event-fx
   :tags.retrieve
   (fn [{:keys [db]} _]
+    (println "Retrieving tags")
     {:dispatch [:ui.set-snackbar-msg "Retrieving tags ..."]
      :http-xhrio
      (nt/merge-defaults db
@@ -76,6 +78,20 @@
          :params {}
          :on-success [:tags.fetch-success]
          :on-failure [:tags.fetch-failure]})}))
+
+(rf/reg-event-fx
+  :tags.new-success
+  (fn [cofx [_ notif]]
+    {:dispatch-n [[:tags.ins-one notif]
+                  [:ui.set-snackbar-msg "Tag created successfully"]
+                  [:ui.tag-add.set-show false]
+                  [:tags.retrieve]]}))
+
+(rf/reg-event-fx
+  :tags.new-fail
+  (fn [cofx [_ fail]]
+    {:dispatch-n [[:ui.set-snackbar-msg
+                   (str "Tag failed to create" (:error fail))]]}))
 
 (def network-evs
   [[:tags.new-success :tags.ins-one "Tag sent"]

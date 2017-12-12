@@ -16,9 +16,8 @@
     (encode-login-info username apikey)))
 
 (def default-xhr-opts
-  {:keywords? true
-   :format (ajax/json-request-format)
-   :response-format (ajax/json-response-format)})
+  {:format (ajax/json-request-format)
+   :response-format (ajax/json-response-format {:keywords? true})})
 
 (defn merge-defaults [db req]
   (merge

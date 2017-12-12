@@ -41,7 +41,7 @@
         id-err (rf/subscribe [:ui.tag-add.id-error])
         name-err (rf/subscribe [:ui.tag-add.name-error])
         cancel-fn  #(rf/dispatch [:ui.tag-add.set-show false])
-        confirm-fn #(rf/dispatch [:tags.add-tag @tid @tname])]
+        confirm-fn #(rf/dispatch [:tags.new])]
     (fn []
       [ui/dialog
        {:modal true

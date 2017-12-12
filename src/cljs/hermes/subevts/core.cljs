@@ -13,6 +13,12 @@
   (fn [_ _]
     {}))
 
+(rf/reg-event-fx
+  :fetch-data
+  (fn [_ _]
+    {:dispatch-n [[:tags.retrieve]
+                  [:notifs.retrieve]]}))
+
 ; Docs
 (utils/reg-subevt-pair :docs :set-docs [:docs :docs])
 

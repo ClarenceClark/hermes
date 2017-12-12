@@ -7,7 +7,7 @@
 (defn login-page []
   (let [email (r/atom "")
         password (r/atom "")
-        login-error? (rf/subscribe [:ui.login-error?])]
+        login-error (rf/subscribe [:ui.login-error])]
     (fn []
       [:div.login.page
        [ui/paper {:z-depth 1
@@ -15,8 +15,8 @@
         [ui/app-bar {:title "Login to Hermes"
                      :show-menu-icon-button false}]
         [:div.login__content
-         [:div {:class (str "login__error " (when-not @login-error? "hide"))}
-          "Invalid email/password"]
+         [:div {:class (str "login__error " (when-not @login-error "hide"))}
+          @login-error]
          [ui/text-field {:floating-label-text "Email"
                          :value @email
                          :on-change (cm/text-catom-fn email)}]

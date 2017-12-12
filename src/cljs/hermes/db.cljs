@@ -15,8 +15,8 @@
         :tags #{1 2}}}))
 
 (def default-db
-  {:login {:username "testing1"
-           :apikey "847aa22d8737c024bbee7df1e8d47004e19380b5392eea9083176f87b69bf2cdc9d87e7492c7dce553a2a9fac86ae3bfbf79e40454e5ee228346c9d28c22e88c"}
+  {:login {:username ""
+           :apikey ""}
    :ui {:login-error ""
         :snackbar-msg ""
         :filter-tags []

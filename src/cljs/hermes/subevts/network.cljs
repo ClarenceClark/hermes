@@ -10,6 +10,9 @@
 (defn encode-login-info [username password]
   (js/btoa (str username ":" password)))
 
+(defn get-auth-from-info [username pass]
+  (str "Basic " (encode-login-info username pass)))
+
 (defn get-auth-from-db [db]
   (let [username (get-in db [:login :username])
         apikey (get-in db [:login :apikey])]

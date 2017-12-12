@@ -12,7 +12,7 @@
             [cljs-react-material-ui.icons :as ic]))
 
 (def pages
-  {:home notifs/notifs-page
+  {:home login/login-page
    :notifications notifs/notifs-page
    :tags tags/tags-page
    :settings settings/settings-page

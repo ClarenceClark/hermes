@@ -39,7 +39,7 @@
     (if (and user-info
              ; Check both apikey and password
              (or (= secret (:apikey user-info))
-                 (hash/check secret (:password user-info))))
+                 (hash/check secret (:passhash user-info))))
       (select-keys user-info [:id :email])
       false)))
 

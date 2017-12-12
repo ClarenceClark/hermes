@@ -29,6 +29,9 @@
    [:ui.tag-ed.active-id :ui.tag-ed.set-active-id [:ui :tag-ed :active-id]]
    [:ui.tag-ed.name :ui.tag-ed.set-name [:ui :tag-ed :name]]
 
+   ; Snackbar
+   [:ui.snackbar-msg :ui.set-snackbar-msg [:ui :snackbar-msg]]
+
    ; Login
    [:ui.login-error :ui.set-login-error [:ui :login-error]]])
 

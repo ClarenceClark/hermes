@@ -78,6 +78,11 @@
 
       [add-tag-dialog]
       [edit-tag-dialog]
+      [ui/snackbar
+       {:open (not (empty? @(rf/subscribe [:ui.snackbar-msg])))
+        :auto-hide-duration 3000
+        :on-request-close #(rf/dispatch [:ui.set-snackbar-msg ""])
+        :message @(rf/subscribe [:ui.snackbar-msg])}]
 
       ; Label and add tag btn
       [:div.page__head

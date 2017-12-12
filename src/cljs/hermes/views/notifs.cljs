@@ -112,4 +112,10 @@
         [notifs-elem notif])]
 
      [notif-create-dialog]
-     [notif-detail-dialog]]))
+     [notif-detail-dialog]
+
+     [ui/snackbar
+      {:open (not (empty? @(rf/subscribe [:ui.snackbar-msg])))
+       :auto-hide-duration 3000
+       :on-request-close #(rf/dispatch [:ui.set-snackbar-msg ""])
+       :message @(rf/subscribe [:ui.snackbar-msg])}]]))

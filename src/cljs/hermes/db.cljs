@@ -18,6 +18,7 @@
   {:login {:username ""
            :apikey ""}
    :ui {:login-error ""
+        :snackbar-msg ""
         :filter-tags []
         :active-notif :none
         :current-page :home

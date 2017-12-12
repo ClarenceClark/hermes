@@ -21,6 +21,11 @@
         :active-notif :none
         :current-page :home
         :navdrawer-open? false
+        :tag-add {:show? false
+                  :id ""
+                  :name ""}
+        :tag-ed {:active-id :none
+                 :name ""}
         :create-notif {:show? false
                        :title ""
                        :content ""

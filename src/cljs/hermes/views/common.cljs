@@ -45,12 +45,20 @@
       [naventry @curpage ic/action-settings
        "Settings " "/#/settings" :settings]]]))
 
-(defn text-cfn [event]
+(defn text-cev-fn [event]
   #(rf/dispatch [event (.-value (.-target %))]))
 
-(defn dialog-confirm-cancel-actions [cancel-fn confirm-fn]
+(defn text-catom-fn [atom]
+  #(reset! atom (.-value (.-target %))))
+
+(defn dialog-confirm-cancel [cancel-fn confirm-fn]
   [(r/as-element [ui/flat-button {:label "Cancel"
                                   :on-click cancel-fn}])
    (r/as-element [ui/flat-button {:label "Confirm"
                                   :primary true
                                   :on-click confirm-fn}])])
+
+(defn disp-text-field [label value full-width?]
+  [ui/text-field {:floating-label-text label
+                  :full-width full-width?
+                  :value value}])

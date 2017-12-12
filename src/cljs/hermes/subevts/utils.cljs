@@ -43,6 +43,12 @@
                 (fn [db dyn]
                   (get-in db dbpath)))))
 
+(defn reg-subevt-pairs
+  "Register multiple subevt pairs at once"
+  [pairs]
+  (doseq [[subname evname dbpath] pairs]
+    (reg-subevt-pair subname evname dbpath)))
+
 (defn reg-bool-toggle-evt
   "Registers a toggle event for db boolean value"
   [evname dbpath]

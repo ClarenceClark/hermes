@@ -33,12 +33,6 @@
     ": "
     [:span.notif__title title]]])
 
-(defn disp-text-field [label value]
-  [ui/text-field {:floating-label-text label
-                  ;:disabled true
-                  :full-width true
-                  :value value}])
-
 (defn notif-detail-dialog
   "Dialog showing notif details"
   []
@@ -51,33 +45,36 @@
       :modal false
       :open (not= :none @active-notif)
       :on-request-close close-notif-fn}
-     [disp-text-field "Title" (:title @active-notif)]
-     [disp-text-field "Time"
+     [cm/disp-text-field "Title" (:title @active-notif) true]
+     [:br]
+     [cm/disp-text-field "Time"
       (if (not= @active-notif :none)
         (fmt/unparse time-fmt (or (:time @active-notif) (time/now)))
         "None")]
-     [disp-text-field "Tags" (clj->js (:tags @active-notif))]
-     [disp-text-field "Content" (:content @active-notif)]]))
+     [:br]
+     [cm/disp-text-field "Tags" (clj->js (:tags @active-notif))]
+     [:br]
+     [cm/disp-text-field "Content" (:content @active-notif) true]]))
 
 (defn- notif-create-dialog []
   (let [ras r/as-element
         cancel-fn #(rf/dispatch [:ui.create-notif.cancel])
         send-fn #(rf/dispatch [:notifs.send])]
     [ui/dialog
-     {:actions (cm/dialog-confirm-cancel-actions cancel-fn send-fn)
+     {:actions (cm/dialog-confirm-cancel cancel-fn send-fn)
       :title "Send New Notification"
       :modal true
       :on-request-close cancel-fn
       :open @(rf/subscribe [:ui.create-notif.show?])}
      [ui/text-field {:floating-label-text "Title"
                      :full-width true
-                     :on-change (cm/text-cfn :ui.create-notif.set-title)
+                     :on-change (cm/text-cev-fn :ui.create-notif.set-title)
                      :value @(rf/subscribe [:ui.create-notif.title])}]
      [:br]
      [ui/text-field {:floating-label-text "Content"
                      :full-width true
                      :multi-line true
-                     :on-change (cm/text-cfn :ui.create-notif.set-content)
+                     :on-change (cm/text-cev-fn :ui.create-notif.set-content)
                      :value @(rf/subscribe [:ui.create-notif.content])}]
      [:br]
      [tags-icon-select (ic/action-loyalty)

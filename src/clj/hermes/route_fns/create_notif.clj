@@ -32,7 +32,9 @@
         user-notif (dbutils/dbnotif->user ret-notif)]
     ; Associate notifs to tags
     (if (not-empty ntjoin)
-      (qu/link-tag-and-notif {:notif-tags ntjoin}))
+      (try
+        (qu/link-tag-and-notif {:notif-tags ntjoin})
+        (catch Exception e (log/error e))))
     (resp/created created-path
                   user-notif)))
 

@@ -22,64 +22,6 @@
 
 (defn merge-defaults [db req]
   (merge
-    {"Authorization" (str "Basic " (get-auth-from-db db))}
+    {:headers {"Authorization" (str "Basic " (get-auth-from-db db))}}
     default-xhr-opts
     req))
-
-(rf/reg-event-fx
-  :network.fetch-notifs
-  (fn [cofx _]
-    {:dispatch [:ui.set-fetching-notifs? true]
-     :http-xhrio
-     (merge default-xhr-opts
-            {:method :get
-             :uri (str api-base "/notifications")
-             :params {:after 0}
-             :on-success [:notifs.fetch-success]
-             :on-failure [:notifs.fetch-failure]})}))
-
-(rf/reg-event-fx
-  :network.fetch-tags
-  (fn [{:keys [db]} _]
-    {:dispatch [:ui.set-fetching-tags? true]
-     :http-xhrio
-     (merge default-xhr-opts
-            {:method :get
-             :uri (str api-base "/tags")})}))
-
-
-(rf/reg-event-fx
-  :network.add-tag
-  (fn [{:keys [db]} [_ id tagname]]
-    {:dispatch [:ui.set-adding-tag? true]
-     :http-xhrio
-     (merge default-xhr-opts
-            {:method :post
-             :uri (str api-base "/tags/" id)
-             :params {:name tagname}
-             :on-success [:tags.add-success]
-             :on-failure [:tags.add-fail]})}))
-
-(rf/reg-event-fx
-  :network.edit-tag
-  (fn [_ [_ id tagname]]
-    {:dispatch [:ui.set-editing-tag? true]
-     :http-xhrio
-     (merge default-xhr-opts
-            {:method :put
-             :uri (str api-base "/tags/" id)
-             :params {:name tagname}
-             :on-success [:tags.edit-success]
-             :on-failure [:tags.edit-fail]})}))
-
-(rf/reg-event-fx
-  :login
-  (fn [_ [_ email password]]
-    {:dispatch [:ui.set-logging-in? true]
-     :http-xhrio
-     (merge default-xhr-opts
-            {:method :get
-             :uri {"Authorization"
-                   (str "Basic " (encode-login-info email password))}
-             :on-success [:login.succes]
-             :on-fail [:login.fail]})}))

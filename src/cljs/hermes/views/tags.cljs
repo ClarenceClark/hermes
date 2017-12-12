@@ -70,6 +70,7 @@
 
    ; Actual page
    [:div.page__container
+    [:div.page__center]
     [ui/paper {:z-depth 1
                :class-name "page__fl-paper"}
      [:div.page__content

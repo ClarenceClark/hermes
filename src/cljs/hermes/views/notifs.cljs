@@ -97,7 +97,7 @@
   "The main notifications page"
   []
   (let [filter-tags (r/atom #js[1 2])]
-    [:div.notifs-page
+    [:div.notifs-page.page
      [cm/appbar]
      [cm/nav-drawer]
 
@@ -105,7 +105,8 @@
      [notifs-toolbar]
 
      ; List of all notifs
-     [ui/list
+     [ui/list {:height "100%"
+               :class-name "notifs__list"}
       (for [notif @(rf/subscribe [:notifs.to-show])]
         ^{:key (:id notif)}
         [notifs-elem notif])]

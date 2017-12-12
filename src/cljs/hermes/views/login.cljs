@@ -1,4 +1,5 @@
-(ns hermes.views.login)
+(ns hermes.views.login
+  (:require [cljs-react-material-ui.reagent :as ui]))
 
 (defn login-page []
-  [:div "temp login"])
+  [ui/paper])

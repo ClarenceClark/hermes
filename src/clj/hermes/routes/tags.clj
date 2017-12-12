@@ -36,6 +36,7 @@
         :summary "Get the tag with the provided id"
         (get-tag-by-id-resp userinfo id))
       (POST "/" []
+        :body-params [name :- s/Str]
         :return model/Tag
         :summary "Create a tag with the specified id"
         (create-tag-with-id-resp userinfo id name))

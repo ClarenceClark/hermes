@@ -16,12 +16,12 @@
 (defn get-all-notifs-resp
   [userinfo afterid tagids]
   (let [notifs (if (empty? tagids)
+                 (qu/get-all-notifications-after-id
+                   {:id afterid
+                    :userid (:id userinfo)})
                  (qu/get-notifications-for-tags-after-id
                    {:tagids tagids
                     :afterid afterid
-                    :userid (:id userinfo)})
-                 (qu/get-all-notifications-after-id
-                   {:id afterid
                     :userid (:id userinfo)}))]
     (resp/ok (dbutil/dbnotiflist->user notifs))))
 

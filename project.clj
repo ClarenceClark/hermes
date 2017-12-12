@@ -14,6 +14,7 @@
                  [compojure "1.6.0"]
                  [conman "0.7.4"]
                  [cprop "0.1.11"]
+                 [day8.re-frame/http-fx "0.1.4"]
                  [funcool/struct "1.1.0"]
                  [luminus-http-kit "0.1.5"]
                  [luminus-migrations "0.4.3"]

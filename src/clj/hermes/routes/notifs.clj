@@ -35,9 +35,9 @@
       not the owners of that resource."
       (get-notif-resp userinfo id))
     (POST "/" []
-      :body-params [title :- s/Str,
-                    content :- s/Str,
-                    tags :- [s/Int]]
+      :body-params [title :- s/Str
+                    {content :- s/Str ""}
+                    {tags :- [s/Int] []}]
       :return model/Notif
       :summary "Create new notification"
       (create-notif-resp userinfo title content tags))))

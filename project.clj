@@ -98,7 +98,7 @@
    :test          [:project/dev :project/test :profiles/test]
 
    :project/dev  {:dependencies [[prone "1.1.4"]
-                                 [ring/ring-mock "0.3.1"]
+                                 [ring/ring-mock "0.3.2"]
                                  [ring/ring-devel "1.6.3"]
                                  [pjstadig/humane-test-output "0.8.3"]
                                  [binaryage/devtools "0.9.7"]

@@ -6,6 +6,7 @@
             [goog.history.EventType :as HistoryEventType]
             [ajax.core :refer [GET POST]]
             [re-frisk.core :as re-frisk]
+            [day8.re-frame.http-fx]
 
             [hermes.views.core :as views]
 

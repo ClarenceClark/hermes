@@ -31,7 +31,8 @@
         ret-notif (assoc notif :tags easyids)
         user-notif (dbutils/dbnotif->user ret-notif)]
     ; Associate notifs to tags
-    (qu/link-tag-and-notif {:notif-tags ntjoin})
+    (if (not-empty ntjoin)
+      (qu/link-tag-and-notif {:notif-tags ntjoin}))
     (resp/created created-path
                   user-notif)))
 

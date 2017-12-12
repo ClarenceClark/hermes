@@ -70,9 +70,10 @@
 
    ; Actual page
    [:div.page__container
-    [:div.page__center]
     [ui/paper {:z-depth 1
-               :class-name "page__fl-paper"}
+               :class-name "page__fl-paper"
+               :style {:min-width "600px"
+                       :max-width "720px"}}
      [:div.page__content
 
       [add-tag-dialog]

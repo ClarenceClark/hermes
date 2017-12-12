@@ -17,7 +17,8 @@
 (def default-db
   {:login {:username ""
            :apikey ""}
-   :ui {:filter-tags []
+   :ui {:login-error? false
+        :filter-tags []
         :active-notif :none
         :current-page :home
         :navdrawer-open? false

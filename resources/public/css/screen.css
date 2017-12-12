@@ -3,6 +3,9 @@ html, body {
   height: 100%;
   margin: 0; }
 
+.hide {
+  display: none; }
+
 .noselect {
   -webkit-touch-callout: none;
   -moz-user-select: none;
@@ -32,8 +35,6 @@ html, body {
     display: inline-block;
     padding: 18px; }
   .page .page__fl-paper {
-    min-width: 600px;
-    max-width: 720px;
     width: 100%;
     height: auto;
     margin: 48px auto; }
@@ -42,3 +43,21 @@ html, body {
 
 .notifs__list {
   overflow-y: scroll; }
+
+.login {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  align-items: center; }
+  .login .login__container {
+    flex: 0 0 auto;
+    width: auto; }
+  .login .login__content {
+    padding: 18px; }
+  .login .login__button {
+    align-self: flex-end;
+    float: right;
+    margin: 18px; }
+  .login .login__error {
+    color: #f44336;
+    font-size: 14px; }

@@ -3,6 +3,9 @@ html, body
   height: 100%
   margin: 0
 
+.hide
+  display: none
+
 .noselect
   -webkit-touch-callout: none
   -moz-user-select: none
@@ -38,8 +41,6 @@ html, body
     padding: 18px
 
   .page__fl-paper
-    min-width: 600px
-    max-width: 720px
     width: 100%
     height: auto
     margin: 48px auto
@@ -49,3 +50,25 @@ html, body
 
 .notifs__list
   overflow-y: scroll
+
+.login
+  height: 100%
+  width: 100%
+  background-color: rgba(0,0,0,0.2)
+  align-items: center
+
+  .login__container
+    flex: 0 0 auto
+    width: auto
+
+  .login__content
+    padding: 18px
+
+  .login__button
+    align-self: flex-end
+    float: right
+    margin: 18px
+
+  .login__error
+    color: rgb(244, 67, 54)
+    font-size: 14px

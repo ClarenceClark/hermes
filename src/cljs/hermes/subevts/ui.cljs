@@ -27,7 +27,10 @@
 
    ; Edit tags
    [:ui.tag-ed.active-id :ui.tag-ed.set-active-id [:ui :tag-ed :active-id]]
-   [:ui.tag-ed.name :ui.tag-ed.set-name [:ui :tag-ed :name]]])
+   [:ui.tag-ed.name :ui.tag-ed.set-name [:ui :tag-ed :name]]
+
+   ; Login
+   [:ui.login-error? :ui.set-login-error? [:ui :login-error?]]])
 
 (evutil/reg-bool-toggle-evt :ui.toggle-navdrawer-open? [:ui :navdrawer-open?])
 

@@ -7,6 +7,7 @@
 (defn login-page []
   (let [email (r/atom "")
         password (r/atom "")
+        signup? (r/atom false)
         login-error (rf/subscribe [:ui.login-error])]
     (fn []
       [:div.login.page
@@ -20,6 +21,11 @@
         [:div.login__content
          [:div {:class (str "login__error " (when-not @login-error "hide"))}
           @login-error]
+
+         [ui/toggle {:label "Signup?"
+                     :toggled @signup?
+                     :on-toggle #(reset! signup? %2)}]
+
          [ui/text-field {:floating-label-text "Email"
                          :value @email
                          :on-change (cm/text-catom-fn email)}]

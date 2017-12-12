@@ -21,7 +21,7 @@
   (let [aid (rf/subscribe [:ui.tag-ed.active-id])
         tname (rf/subscribe [:ui.tag-ed.name])
         cancel-fn #(rf/dispatch [:ui.tag-ed.set-active-id :none])
-        confirm-fn #(rf/dispatch [:ui.edit-tag @aid @tname])]
+        confirm-fn #(rf/dispatch [:tags.edit])]
     (fn []
       [ui/dialog
        {:modal true
@@ -112,5 +112,5 @@
        ; Table body
        [ui/table-body {:display-row-checkbox false}
         (for [tag @(rf/subscribe [:tags.all])]
-          ^{:key (:id tag)}
+          ^{:key tag}
           [tag-elem tag])]]]]]])

@@ -34,20 +34,21 @@
 (rf/reg-event-db
   :notifs.ins-one
   [notif-int]
-  (fn [notif-map {:keys [id title content time tags]}]
+  (fn [notif-map [{:keys [id title content time tags]}]]
     (assoc notif-map id {:id id
                          :title title
                          :content content
                          :time (fmt/parse bsc-dt time)
-                         :tags tags})))
+                         :tags (set tags)})))
 
 (rf/reg-event-db
   :notifs.ins-multi
   [notif-int]
   (fn [notif-map [notifs]]
     (let [timed (map (fn [n] (update-in n [:time] #(fmt/parse bsc-dt %))) notifs)
+          tagset (map (fn [n] (update n :tags set)) timed)
           ;_ (println timed)
-          tuples (map (fn [n] [(:id n) n]) timed)
+          tuples (map (fn [n] [(:id n) n]) tagset)
           new (into {} tuples)]
       (merge notif-map new))))
 

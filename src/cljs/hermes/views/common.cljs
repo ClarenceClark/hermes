@@ -45,6 +45,13 @@
       [naventry @curpage ic/action-settings
        "Settings " "/#/settings" :settings]]]))
 
+(defn snackbar []
+  [ui/snackbar
+   {:open (not (empty? @(rf/subscribe [:ui.snackbar-msg])))
+    :auto-hide-duration 3000
+    :on-request-close #(rf/dispatch [:ui.set-snackbar-msg ""])
+    :message @(rf/subscribe [:ui.snackbar-msg])}])
+
 (defn text-cev-fn [event]
   #(rf/dispatch [event (.-value (.-target %))]))
 

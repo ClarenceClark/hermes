@@ -14,6 +14,9 @@
                   :class-name "login__container"}
         [ui/app-bar {:title "Login to Hermes"
                      :show-menu-icon-button false}]
+
+        [cm/snackbar]
+
         [:div.login__content
          [:div {:class (str "login__error " (when-not @login-error "hide"))}
           @login-error]

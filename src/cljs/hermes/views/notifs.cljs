@@ -85,6 +85,9 @@
    [ui/toolbar-title {:text "Notifications"}]
    [ui/toolbar-group {:last-child true}
 
+    [ui/icon-button {:on-click #(rf/dispatch [:notifs.retrieve])}
+     (ic/navigation-refresh)]
+
     ; Tags filter menu
     [tags-icon-select (ic/content-filter-list)
      :ui.filter-tags :ui.set-filter-tags]

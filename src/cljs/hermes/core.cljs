@@ -7,7 +7,6 @@
             [ajax.core :refer [GET POST]]
             [re-frisk.core :as re-frisk]
 
-            [hermes.ajax :refer [load-interceptors!]]
             [hermes.views.core :as views]
 
             ; Load subs and events
@@ -66,7 +65,6 @@
   (when debug?
     (enable-console-print!)
     (re-frisk/enable-re-frisk!))
-  (load-interceptors!)
   (fetch-docs!)
   (hook-browser-navigation!)
   (mount-components))

@@ -19,6 +19,15 @@ html, body
     height: inherit
     width: inherit
 
+.notifs-page
+  height: 100%
+  display: flex
+  flex-direction: column
+
+  .notifs__list
+    flex: 0 0 auto
+    overflow-y: scroll
+
 .page
   height: 100%
   display: flex
@@ -47,9 +56,6 @@ html, body
 
   .page__content
     padding: 18px
-
-.notifs__list
-  overflow-y: scroll
 
 .login
   height: 100%

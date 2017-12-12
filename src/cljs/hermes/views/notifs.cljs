@@ -97,7 +97,7 @@
   "The main notifications page"
   []
   (let [filter-tags (r/atom #js[1 2])]
-    [:div.notifs-page.page
+    [:div.notifs-page
      [cm/appbar]
      [cm/nav-drawer]
 
